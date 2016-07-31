@@ -44,8 +44,8 @@ gulp.task('default', function() {
 });
 
 /*PUBLIC TASKS*/
-gulp.task('dev', ['jshint', 'copyLess','copyJs', 'partials'], function(){
-	gulp.src("gulpfile.js").pipe(notify({"title": PROJECT_NAME, "subtitle": "Desarrollo", "message": "Codigo compilado"}));
+gulp.task('dev', ['jshint', 'copyLess','copyJs', 'partials', 'devIndex'], function(){
+	gulp.src("gulpfile.js").pipe(notify({"title": PROJECT_NAME, "subtitle": "Development", "message": "Dev build generated"}));
 });
 
 gulp.task('jshint', function() {
@@ -78,14 +78,18 @@ gulp.task('jshint', function() {
 
 gulp.task('auto', function () {  
 	runSequence('cleanDist',
-		['dev', 'copyStatic', 'devIndex'], 
+		['dev', 'copyStatic'], 
 		function(){
-			gulp.watch(['src/index.html', 'src/js/**/*.js', 'src/css/**/*.less','src/partials/**/*'], ['dev','devIndex']);
+			gulp.watch(['src/index.html', 'src/js/**/*.js', 'src/css/**/*.less','src/partials/**/*'], ['dev']);
 		});
 });
 
 gulp.task('build', function () {  
-	runSequence('cleanDist', ['jshint',  'minLess', 'minJs', 'copyStatic', 'proIndex']);
+	runSequence('cleanDist', 
+		['jshint',  'minLess', 'minJs', 'copyStatic', 'proIndex'],
+		function(){
+			gulp.src("gulpfile.js").pipe(notify({"title": PROJECT_NAME, "subtitle": "Development", "message": "Production build generated"}));
+		});
 });
 
 
