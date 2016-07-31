@@ -1,0 +1,32 @@
+<html ng-app="myApp" ng-strict-di check-route-error>
+<head>
+	<title ng-bind="$root.title"></title>
+	<link rel="stylesheet" type="text/css" href="css/build.css">
+	<script src="js/build.js"></script>
+
+	<!--<link href='http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css' rel='stylesheet' type='text/css'>-->
+</head>
+<body>
+	<aside>
+		<div class='aside-logo'>
+		</div>
+		<nav>
+			<ul>
+				<li link-route='/veterans'>
+					<span>Veterans</span>
+					<!--<span class='ion-ios-bookmarks'></span>-->
+				</li>
+				<li link-route='/newbies'>
+					<span>Newbies</span>
+				</li>			
+				<li link-route='/people'>
+					<span>Everyone</span>
+				</li>			
+			</ul>
+		</nav>
+	</aside>
+	<main>
+		<div ng-view></div>
+	</main>
+</body>
+</html>

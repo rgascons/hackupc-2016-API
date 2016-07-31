@@ -1,0 +1,26 @@
+
+//SLIDE DOWN
+.fade.ng-enter,
+.fade.ng-leave {
+	position:absolute;
+	height:100%;
+	width:100%;
+    margin-top: 0;
+    -webkit-transition: opacity @transitionLength ease;
+    -moz-transition: opacity @transitionLength ease;
+    -o-transition: opacity @transitionLength ease;
+    transition: opacity @transitionLength ease;
+}
+.fade.ng-enter {
+	opacity:0;
+	z-index:99;
+}
+.fade.ng-enter-active {
+    opacity:1;
+}
+.fade.ng-leave {
+    
+}
+.fade.ng-leave-active {
+   opacity:0;
+}

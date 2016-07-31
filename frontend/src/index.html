@@ -1,0 +1,42 @@
+<html ng-app="myApp" ng-strict-di check-route-error force-login>
+<head>
+	<title ng-bind="$root.appTitle"></title>
+	<link rel="stylesheet" type="text/css" href="css/build.css">
+	<script src='js/angular.js'></script>
+	<script src="js/angular-route.js"></script>
+	<script src="js/ng_route_ext.js"></script>
+	<script src="js/angular-animate.js"></script>
+	<script src="js/ng-notify.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/controllers.js"></script>
+	<script src="js/directives.js"></script>
+	<script src="js/services.js"></script>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+</head>
+
+<body>
+	<div class="loading" show-while-resolving></div>
+	<aside id="leftMenu" close-on-success>
+		<user-info></user-info>
+		<nav>
+			<ul>
+				<li link-route='/veterans'>
+					<span>Veterans</span>
+					<!--<span class='ion-ios-bookmarks'></span>-->
+				</li>
+				<li link-route='/newcomers'>
+					<span>Newcomers</span>
+				</li>			
+				<li link-route='/people'>
+					<span>Everyone</span>
+				</li>			
+			</ul>
+			
+		</nav>
+	</aside>
+	<main>
+		<div class="fade" ng-view></div>
+	</main>
+</body>
+</html>

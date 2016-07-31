@@ -1,0 +1,11 @@
+<article>
+	<header>
+		<div class="button" ng-click="back()" >Back</div>
+		<h1>{{$root.$route.current.name}}</h1>
+	</header>
+	<div ng-if="lastRated !== null">
+		<h1>{{lastRated.name}}</h1>
+		<h2>{{lastRated.age}}</h2>
+		<div>{{lastRated.desc}}</div>
+	</div>
+</article>

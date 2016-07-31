@@ -1,0 +1,24 @@
+<article id="people">
+	<header>
+		<div class="button" aside-menu-toggle="leftMenu" >&#9776;</div>
+		<h1>{{$root.$route.current.name}}</h1>
+	</header>
+	<ul>
+		<li ng-repeat="person in people track by person.id">
+			<div class="name">
+				{{person.name}} <span>({{person.id}})</span>
+			</div>
+			<div class="status-selector">
+				<div class="blocked" ng-class="{'selected': (person.status == 'blocked')}" ng-click="changeStatus(person, 'blocked')">
+					B
+				</div>
+				<div class="algorithm" ng-class="{'selected': (person.status == 'algorithm')}" ng-click="changeStatus(person, 'algorithm')">
+					L
+				</div>
+				<div class="accepted" ng-class="{'selected': (person.status == 'accepted')}" ng-click="changeStatus(person, 'accepted')">
+					A
+				</div>
+			</div>
+		</li>
+	</ul>
+</article>
