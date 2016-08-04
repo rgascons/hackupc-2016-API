@@ -14,9 +14,10 @@ angular.module('myApp', ['ngRoute', 'ngAnimate', 'ngNotify', 'controllers', 'dir
 		controller: 'VeteransCtrl',
 		name: 'Veterans',
 		resolve:{
+			/*
 			"lastRated":['API', function(API){
 				return API.getLastRated("veteran");
-			}],
+			}],*/
 			"current":['API', function(API){
 				return API.getPending("veteran");
 			}]
@@ -37,9 +38,6 @@ angular.module('myApp', ['ngRoute', 'ngAnimate', 'ngNotify', 'controllers', 'dir
 		controller: 'NewcomersCtrl',
 		name: 'Newcomers',
 		resolve:{
-			"lastRated":['API', function(API){
-				return API.getLastRated("newcomer");
-			}],
 			"current":['API', function(API){
 				return API.getPending("newcomer");
 			}]

@@ -53,7 +53,8 @@ angular.module('controllers', [])
 	$scope.back = function(){
 		$window.history.back();
 	};
-	$scope.lastRated = lastRated;
+	$scope.lastRated = lastRated.person;
+	$scope.rating = lastRated.rated;
 }])
 .controller('NewcomersCtrl', ['$scope', 'API','lastRated', 'current', '$location',
 	function ($scope, API, lastRated, current, $location) {

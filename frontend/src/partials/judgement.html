@@ -1,4 +1,4 @@
-<article>
+<article id="judgement">
 	<header>
 		<div class="button" aside-menu-toggle="leftMenu" >&#9776;</div>
 		<h1>{{$root.$route.current.name}}</h1>
@@ -8,12 +8,12 @@
 		<h1>{{current.name}}</h1>
 		<h2>{{current.age}}</h2>
 		<div>{{current.desc}}</div>
-		<div class="judgementButtons">
-			<div class="better" ng-click="better()">better</div>
-			<div class="worse" ng-click="worse()">worse</div>
-		</div>
+		<footer class="judgementButtons">
+			<div class="worse" ng-click="worse()">X</div>
+			<div class="better" ng-click="better()">Y</div>
+		</footer>
 	</div>
-	<div ng-if="current !== null">
+	<div ng-if="current === null">
 		<h1>No one in this list :/</h1>
 	</div>
 </article>

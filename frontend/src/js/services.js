@@ -86,8 +86,32 @@ angular.module('services', [])
 				desc: "asdvasdvasdv asdv asd vasd vasdv asdv asdv asd vasd vasd v."
 			}
 		],
-		newcomerRatings:[],
-		veteranRatings:[],
+		newcomerRatings:
+		[
+			{
+				person: 
+				{
+					id:"im@rat2.ed",
+					name: "New Rated",
+					age: 16,
+					desc: "asfasfasfasf st rated las taretad etareada v."
+				},
+				rating: 0
+			}
+		],
+		veteranRatings:
+		[
+			{
+				person: 
+				{
+					id:"im@rat1.ed",
+					name: "VetRated",
+					age: 18,
+					desc: "asfabetebetesfasfasf st rated las taretad etareada v."
+				},
+				rating: 1
+			}
+		],
 		everyone:
 		[
 			{
@@ -141,6 +165,7 @@ angular.module('services', [])
 
 		//Fake latency
 		$window.setTimeout(function(){
+			debugger;
 			var currentPerson = null;
 			if(type == "veteran")
 				currentPerson = mockData.veteranRatings.length ? mockData.veteranRatings.slice(mockData.veteranRatings.length-1, mockData.veteranRatings.length)[0] : null;
