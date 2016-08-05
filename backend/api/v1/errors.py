@@ -8,6 +8,6 @@ class AuthError(object):
 def handleAuthError(error):
 	return {
 		'msg': error.message,
-		'type': 'Validation',
+		'type': 'Auth',
 		'field': error.field
 	}
