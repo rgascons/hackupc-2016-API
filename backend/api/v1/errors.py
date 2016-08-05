@@ -1,11 +1,11 @@
-class ValidationError(object):
+class AuthError(object):
 	def __init__(self, field, message):
 		self.field = field
 		self.message = message
 
-@applicationManager.errorhandler(ValidationError)
+@applicationManager.errorhandler(AuthError)
 @asJSON(return_code=401)
-def handleValidationError(error):
+def handleAuthError(error):
 	return {
 		'msg': error.message,
 		'type': 'Validation',
