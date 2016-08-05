@@ -30,7 +30,7 @@ def get_users():
 @applicationManager.route('/api/v1/application/last', methods=['GET'])
 @requires_token
 @asJSON
-def get_last_application(judge_id):
+def get_last_application():
     return null
 
 # GET NEXT APPLICATION TO JUDGE
@@ -38,7 +38,7 @@ def get_last_application(judge_id):
 @applicationManager.route('/api/v1/application/next', methods=['GET'])
 @requires_token
 @asJSON
-def get_next_application(judge_id):
+def get_next_application():
     return null
 
 # RATE AN APPLICATION
@@ -55,6 +55,14 @@ def rate_application(application_id, rating):
 @requires_token
 @asJSON
 def change_application_state(application_id, state):
+    return null
+
+# GET APPLICATION DETAIL
+# POST /api/v1/application/<int:application_id>
+@applicationManager.route('/api/v1/application/<int:application_id>', methods=['GET'])
+@requires_token
+@asJSON
+def get_application_detail(application_id):
     return null
 
 if __name__ == "__main__":

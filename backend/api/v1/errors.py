@@ -4,7 +4,7 @@ class ValidationError(object):
 		self.message = message
 
 @applicationManager.errorhandler(ValidationError)
-@asJSON(400)
+@asJSON(return_code=400)
 def handleValidationError(error):
 	return {
 		'msg': error.message,
