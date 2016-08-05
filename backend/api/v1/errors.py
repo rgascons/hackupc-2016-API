@@ -4,11 +4,10 @@ class ValidationError(object):
 		self.message = message
 
 @applicationManager.errorhandler(ValidationError)
+@asJSON(400)
 def handleValidationError(error):
-	response = jsonify({
+	return {
 		'msg': error.message,
 		'type': 'Validation',
 		'field': error.field
-	})
-	response.status_code = 400
-	return response
+	}
