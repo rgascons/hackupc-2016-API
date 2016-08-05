@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 import uuid
 import datetime
-import auth
 
 TOKEN_DURATION = 999
 UNAUTHORIZED = 'Unauthorized'
