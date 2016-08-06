@@ -4,7 +4,7 @@
 		<h1>{{$root.$route.current.name}}</h1>
 	</header>
 	<ul>
-		<li ng-repeat="person in people track by person.id">
+		<li ng-repeat="person in people track by person.id" ng-click="viewPerson(person.id)">
 			<div class="name">
 				{{person.name}} <span>({{person.id}})</span>
 			</div>

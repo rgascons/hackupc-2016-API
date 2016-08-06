@@ -1,18 +1,24 @@
 'use strict';
 
 angular.module('myApp', ['ngRoute', 'ngAnimate', 'ngNotify', 'controllers', 'directives', 'services'])
-.config(['$routeProvider', function($routeProvider) {
+.constant("PATHS", {
+	"login": "/login",
+	"judgement": "/judgement",
+	"last": "/judgement/last",
+	"people": "/people"
+})
+.config(['$routeProvider', "PATHS", function($routeProvider, PATHS) {
 
 	$routeProvider
-	.when('/login', {
+	.when(PATHS.login, {
 		templateUrl: 'partials/login.html',
 		controller: 'LoginCtrl',
 		name: 'Login'
 	})
-	.when('/veterans', {
+	.when(PATHS.judgement, {
 		templateUrl: 'partials/judgement.html',
-		controller: 'VeteransCtrl',
-		name: 'Veterans',
+		controller: 'JudgementCtrl',
+		name: 'Judgement',
 		resolve:{
 			/*
 			"lastRated":['API', function(API){
@@ -23,43 +29,33 @@ angular.module('myApp', ['ngRoute', 'ngAnimate', 'ngNotify', 'controllers', 'dir
 			}]
 		}
 	})
-	.when('/veterans/last', {
+	.when(PATHS.last, {
 		templateUrl: 'partials/reminder.html',
 		controller: 'LastRatedCtrl',
-		name: 'Last veteran rated',
+		name: 'Last rated',
 		resolve:{
 			"lastRated":['API', function(API){
 				return API.getLastRated("veteran");
 			}]
 		}
 	})
-	.when('/newcomers', {
-		templateUrl: 'partials/judgement.html',
-		controller: 'NewcomersCtrl',
-		name: 'Newcomers',
-		resolve:{
-			"current":['API', function(API){
-				return API.getPending("newcomer");
-			}]
-		}
-	})
-	.when('/newcomers/last', {
-		templateUrl: 'partials/reminder.html',
-		controller: 'LastRatedCtrl',
-		name: 'Last newcomer rated',
-		resolve:{
-			"lastRated":['API', function(API){
-				return API.getLastRated("newcomer");
-			}]
-		}
-	})
-	.when('/people', {
+	.when(PATHS.people, {
 		templateUrl: 'partials/people.html',
 		controller: 'PeopleCtrl',
 		name: 'People',
 		resolve:{
 			"people":['API', function(API){
 				return API.getEveryone();
+			}]
+		}
+	})
+	.when(PATHS.people+'/:personId', {
+		templateUrl: 'partials/person.html',
+		controller: 'PersonCtrl',
+		name: 'Person',
+		resolve:{
+			"person":['API', '$route', function(API, $route){
+				return API.getPerson($route.current.params.personId);
 			}]
 		}
 	})
@@ -83,12 +79,18 @@ angular.module('myApp', ['ngRoute', 'ngAnimate', 'ngNotify', 'controllers', 'dir
 	})
 	*/
 	.otherwise({
-		redirectTo: '/veterans'
+		redirectTo: PATHS.judgement
 	});
 	
 }])
-.run(['$rootScope', '$route',function($rootScope, $route) {
-  $rootScope.appTitle = "Hackers Judge";
-  $rootScope.version = "0.1a";
-  $rootScope.$route = $route;
+.run(['$rootScope', '$route', 'Storage', 'Auth', function($rootScope, $route, Storage, Auth) {
+	$rootScope.appTitle = "Hackers Judge";
+	$rootScope.version = "0.3a";
+	$rootScope.$route = $route;
+
+	var user = Storage.get("user");
+	if(user !== undefined)
+	{
+		Auth.login(user);
+	}
 }]);

@@ -1,7 +1,29 @@
 'use strict';
 
 angular.module('services', [])
+//Handles persistent data
+.factory('Storage', ['$window',function($window){
+	var service = {};
+	var ns = "_storage";
+	var data = ($window.localStorage.getItem(ns) === null) ? "{}" : $window.localStorage.getItem(ns);
+	data = $window.JSON.parse(data);
+	service.set = function(key, value){
+		data[key] = value;
+		$window.localStorage.setItem(ns, $window.JSON.stringify(data));
+	};
+
+	service.get = function(key){
+		return data[key];
+	};
+
+	service.clear = function(){
+		$window.localStorage.clear();	
+	};
+
+	return service;
+}])
 //Handles user sessions
+//-Events: 'logoutEvent'
 .factory('Auth',['$rootScope', function($rootScope){
 	var user = {};
 	var service = {};
@@ -32,227 +54,199 @@ angular.module('services', [])
 
 	return service;
 }])
-
-//TODO: real API / remove mock
-//TODO: send token
-//TODO: check user session status in api response: logout if token is invalid
-.factory('API',['$q', 'Auth', '$window', function($q, Auth, $window){
-	function _simulateThrottle(min, max)
-	{
-	    return Math.floor(Math.random()*(max-min+1)+min);
-	}
+.factory('API',['$http', '$q', 'Auth', 'Storage',
+	function($http, $q, Auth, Storage){
+	var API_URL = "http://www.hackupc.com";
 	var service = {};
-	var mockData = 
-	{
-		veterans:
-		[
+
+	/*
+	* Rejects a promise with an object containing a msg with the reason of the reject
+	* PRE:
+	* -response is a response object (see angular's $http)
+	* -deferred is a deferred object (see angular's $q)
+	* POST:
+	* -on status 401, logs out (token is not valid)
+	* -rejects the promise with an object {status: (Int), msg: (String)}
+	*/
+	function _handleError(response, deferred){
+		var rejectObj = {
+			status: response.status,
+			msg: ''
+		};
+
+		if(response.status == 400)
+		{
+			rejectObj.msg = "An error has occurred. Please, contact the admins if you see this.";
+		}
+		else if(response.status == 401)
+		{
+			rejectObj.msg = response.data.msg;
+			if(Auth.isLoggedIn())
 			{
-				id:"gerard@gerard.ger",
-				name: "Gerard",
-				age: 23,
-				desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas molestie nibh non ornare sagittis. Quisque dignissim fermentum felis in luctus. Cras vitae malesuada tellus, ac pellentesque neque. Morbi venenatis turpis ac eros ultrices, non convallis tellus lobortis. Cras varius dolor non justo vulputate, nec tincidunt turpis facilisis. Praesent vestibulum at odio ac molestie. Duis non congue felis."
-			},
-			{
-				id:"heyya@heyya.ger",
-				name: "Heyya",
-				age: 109,
-				desc: "Super guay"
-			},
-			{
-				id:"super@super.pro",
-				name: "Supepro",
-				age: 98,
-				desc: "asdvasdvasdv asdv asd vasd vasdv asdv asdv asd vasd vasd v."
+				Auth.logout();
+				Storage.clear();
 			}
-		],
-		newcomers:
-		[
-			{
-				id:"noob@noob.no",
-				name: "Noob",
-				age: 5,
-				desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas molestie nibh non ornare sagittis. Quisque dignissim fermentum felis in luctus. Cras vitae malesuada tellus, ac pellentesque neque. Morbi venenatis turpis ac eros ultrices, non convallis tellus lobortis. Cras varius dolor non justo vulputate, nec tincidunt turpis facilisis. Praesent vestibulum at odio ac molestie. Duis non congue felis."
-			},
-			{
-				id:"lele@lele.lel",
-				name: "lelel",
-				age: 15,
-				desc: "Super guay"
-			},
-			{
-				id:"whatis@sanic.wtf",
-				name: "Whatisasanic",
-				age: 16,
-				desc: "asdvasdvasdv asdv asd vasd vasdv asdv asdv asd vasd vasd v."
-			}
-		],
-		newcomerRatings:
-		[
-			{
-				person: 
-				{
-					id:"im@rat2.ed",
-					name: "New Rated",
-					age: 16,
-					desc: "asfasfasfasf st rated las taretad etareada v."
-				},
-				rating: 0
-			}
-		],
-		veteranRatings:
-		[
-			{
-				person: 
-				{
-					id:"im@rat1.ed",
-					name: "VetRated",
-					age: 18,
-					desc: "asfabetebetesfasfasf st rated las taretad etareada v."
-				},
-				rating: 1
-			}
-		],
-		everyone:
-		[
-			{
-				id:"noob@noob.no",
-				name: "Noob",
-				age: 5,
-				desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas molestie nibh non ornare sagittis. Quisque dignissim fermentum felis in luctus. Cras vitae malesuada tellus, ac pellentesque neque. Morbi venenatis turpis ac eros ultrices, non convallis tellus lobortis. Cras varius dolor non justo vulputate, nec tincidunt turpis facilisis. Praesent vestibulum at odio ac molestie. Duis non congue felis.",
-				status:"blocked"
-			},
-			{
-				id:"lele@lele.lel",
-				name: "lelel",
-				age: 15,
-				desc: "Super guay",
-				status:"accepted"
-			},
-			{
-				id:"whatis@sanic.wtf",
-				name: "Whatisasanic",
-				age: 16,
-				desc: "asdvasdvasdv asdv asd vasd vasdv asdv asdv asd vasd vasd v.",
-				status:"algorithm"
-			},
-			{
-				id:"gerard@gerard.ger",
-				name: "Gerard",
-				age: 23,
-				desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas molestie nibh non ornare sagittis. Quisque dignissim fermentum felis in luctus. Cras vitae malesuada tellus, ac pellentesque neque. Morbi venenatis turpis ac eros ultrices, non convallis tellus lobortis. Cras varius dolor non justo vulputate, nec tincidunt turpis facilisis. Praesent vestibulum at odio ac molestie. Duis non congue felis.",
-				status:"algorithm"
-			},
-			{
-				id:"heyya@heyya.ger",
-				name: "Heyya",
-				age: 109,
-				desc: "Super guay",
-				status:"algorithm"
+		}
+		else if(response.status == 404)
+		{
+			rejectObj.msg = "Not found";
+		}
+		else if(response.status == 500)
+		{
+			rejectObj.msg = "An error has occurred. Please, try again later.";
+		}
 
-			},
-			{
-				id:"super@super.pro",
-				name: "Supepro",
-				age: 98,
-				desc: "asdvasdvasdv asdv asd vasd vasdv asdv asdv asd vasd vasd v.",
-				status:"algorithm"
-			}
-		]
-	};
+		deferred.reject(rejectObj);
+	}
 
-	service.getLastRated = function(type){
-		var deferred = $q.defer();
-
-		//Fake latency
-		$window.setTimeout(function(){
-			debugger;
-			var currentPerson = null;
-			if(type == "veteran")
-				currentPerson = mockData.veteranRatings.length ? mockData.veteranRatings.slice(mockData.veteranRatings.length-1, mockData.veteranRatings.length)[0] : null;
-			else
-				currentPerson = mockData.newcomerRatings.length ? mockData.newcomerRatings.slice(mockData.newcomerRatings.length-1, mockData.newcomerRatings.length)[0] : null;
-
-			deferred.resolve(currentPerson);
-		}, _simulateThrottle(500, 1500));
-
-		return deferred.promise;
-	};
-
-	service.getPending = function(type){
-		var deferred = $q.defer();
-
-		//Fake latency
-		$window.setTimeout(function(){
-			var currentPerson = null;
-			if(type == "veteran")
-				currentPerson = mockData.veterans.length ? mockData.veterans.slice(0, 1)[0] : null;
-			else
-				currentPerson = mockData.newcomers.length ? mockData.newcomers.slice(0, 1)[0] : null;
-
-			deferred.resolve(currentPerson);
-		}, _simulateThrottle(500, 1500));
-
-		return deferred.promise;
-	};
-
-	service.getEveryone = function(){
-		var deferred = $q.defer();
-
-		$window.setTimeout(function(){
-			deferred.resolve(mockData.everyone);
-		}, _simulateThrottle(500, 1500));
-
-		return deferred.promise;
-	};
-
-
-	service.rate = function(type, rating){
-		var deferred = $q.defer();
-		$window.setTimeout(function(){
-			if(type == "veteran")
-				mockData.veteranRatings.push({person: mockData.veterans.shift(), rating: rating});
-			else
-				mockData.newcomerRatings.push({person: mockData.newcomers.shift(), rating: rating});
-
-			deferred.resolve();
-		}, _simulateThrottle(500, 1500));
-
-		return deferred.promise;
-	};
-
-	service.changeStatus = function(id, status){
-		var deferred = $q.defer();
-		$window.setTimeout(function(){
-			deferred.resolve();
-		}, _simulateThrottle(100, 300));
-		return deferred.promise;
-	};
-
+	/*
+	* PRE: 
+	* -user{name: (String), password: (String)}
+	* POST: 
+	* -If user match is found, Auth.login()
+	*
+	* @returns promise
+	*/
 	service.login = function(user){
 		var deferred = $q.defer();
-		$window.setTimeout(function(){
-			if(user.name == "test" && user.password == "test")
-			{
-				Auth.login(user);
-				deferred.resolve(true);
+		$http.get(API_URL+'/login', {
+			params: {
+				"user": user.name,
+				"password": user.password
 			}
-
-			deferred.resolve(false);
-		}, _simulateThrottle(500, 1000));
+		}).then(function(response){
+			deferred.resolve(response.data.token);
+		}, function(response){
+			_handleError(response, deferred);
+		});
 
 		return deferred.promise;
 	};
 
-	service.logout = function(){
+	/*
+	* Gets all applicants
+	* @returns promise
+	*/
+	service.getEveryone = function(){
 		var deferred = $q.defer();
-		$window.setTimeout(function(){
+		$http.get(API_URL+'/applicants', {
+			params: {
+				"token": Auth.getToken()
+			}
+		}).then(function(response){
+			deferred.resolve(response.data);
+		}, function(response){
+			_handleError(response, deferred);
+		});
 
-			Auth.logout();
+		return deferred.promise;	
+	};
+
+	/*
+	* Gets last application rated
+	* @returns promise
+	*/
+	service.getLastRated = function(){
+		var deferred = $q.defer();
+		$http.get(API_URL+'/application/last', {
+			params: {
+				"token": Auth.getToken()
+			}
+		}).then(function(response){
+			deferred.resolve(response.data);
+		}, function(response){
+			_handleError(response, deferred);
+		});
+
+		return deferred.promise;	
+	};
+
+	/*
+	* Gets an application to be rated
+	* @returns promise
+	*/
+	service.getPending = function(){
+		var deferred = $q.defer();
+		$http.get(API_URL+'/application/next', {
+			params: {
+				"token": Auth.getToken()
+			}
+		}).then(function(response){
+			deferred.resolve(response.data);
+		}, function(response){
+			_handleError(response, deferred);
+		});
+
+		return deferred.promise;	
+	};
+
+	/*
+	* Rates the next application
+	* PRE:
+	* -rating is ('better'|'worse')
+	*
+	* @returns promise
+	*/
+	service.rate = function(rating){
+		var deferred = $q.defer();
+		$http.get(API_URL+'/rate/'+rating, {
+			params: {
+				"token": Auth.getToken()
+			}
+		}).then(function(response){
 			deferred.resolve();
-		}, _simulateThrottle(500, 1000));
+		}, function(response){
+			_handleError(response, deferred);
+		});
+
+		return deferred.promise;	
+	};
+
+	/*
+	* Changes the status of an application
+	* PRE:
+	* -id is the id of an applicant
+	* -status is ('tba'|'accepted'|'rejected')
+	*
+	* @returns promise
+	*/
+	service.changeStatus = function(id, status){
+		var deferred = $q.defer();
+		$http.get(API_URL+'/status/'+status, {
+			params: {
+				"token": Auth.getToken()
+			}
+		}).then(function(response){
+			deferred.resolve();
+		}, function(response){
+			_handleError(response, deferred);
+		});
+
+		return deferred.promise;
+	};
+
+	/*
+	* Gets the detail of an application
+	* PRE:
+	* -id is the id of an applicant
+	*
+	* @returns promise
+	*/
+	service.getPerson = function(id){
+		var deferred = $q.defer();
+		$http.get(API_URL+'/application/'+id, {
+			params: {
+				"token": Auth.getToken()
+			}
+		}).then(function(response){
+			deferred.resolve();
+		}, function(response){
+			_handleError(response, deferred);
+		});
 
 		return deferred.promise;
 	};
 
 	return service;
+
 }]);
