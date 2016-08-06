@@ -11,18 +11,14 @@ userSessions = {}
 @applicationManager.route('/api/v1/login', methods=['GET'])
 @asJSON
 def login_user():
-    username = request.form['username']
-    pwd = request.form['password']
-    token = generate_token()
-    saveCurrentToken(username, token)
-    return jsonify({"token": token})
+    pass
 
 # GET ALL APPLICANTS
 # GET /api/v1/applicants
 @applicationManager.route('/api/v1/applicants', methods=['GET'])
 @requires_token
 @asJSON
-def get_users():
+def get_applicants():
     pass
 
 # GET LAST JUDGED APPLICATION
@@ -31,7 +27,7 @@ def get_users():
 @requires_token
 @asJSON
 def get_last_application():
-    return null
+    pass
 
 # GET NEXT APPLICATION TO JUDGE
 # GET /api/v1/application/next
@@ -39,7 +35,7 @@ def get_last_application():
 @requires_token
 @asJSON
 def get_next_application():
-    return null
+    pass
 
 # RATE AN APPLICATION
 # POST /api/v1/rate/<int:application_id>/<rating>
@@ -47,15 +43,15 @@ def get_next_application():
 @requires_token
 @asJSON
 def rate_application(application_id, rating):
-    return null
+    pass
 
 # CHANGE STATE OF APPLICATION
-# POST /api/v1/rate/<int:application_id>/<state>
-@applicationManager.route('/api/v1/state/<state>', methods=['POST'])
+# POST /api/v1/state/<int:application_id>/<state>
+@applicationManager.route('/api/v1/state/<int:application_id>/<state>', methods=['POST'])
 @requires_token
 @asJSON
 def change_application_state(application_id, state):
-    return null
+    pass
 
 # GET APPLICATION DETAIL
 # POST /api/v1/application/<int:application_id>
@@ -63,7 +59,7 @@ def change_application_state(application_id, state):
 @requires_token
 @asJSON
 def get_application_detail(application_id):
-    return null
+    pass
 
 if __name__ == "__main__":
     app.run()

@@ -1,18 +1,14 @@
 def token_exists(token):
-    return token in userSessions.keys()
+    pass
 
-#Stores the tokens for each user and the counter to delete it
 def generate_token():
-    return uuid.uuid4().hex
+    pass
 
 def saveCurrentToken(username, token):
-        today = datetime.datetime.today()
-        expireDate = today + datetime.timedelta(seconds=TOKEN_DURATION)
-        userSessions[token] = {'username': username, 'timeLeft': expireDate}
+	pass
 
-#Returns username if authorized. If not, returns unauthorized
 def getCurrentUser(token):
-    if token_exists(token):
-        return userSessions[token]['username']
-    else:
-        return UNAUTHORIZED
+	pass
+
+class TokenAuth(object):
+	def __init__(self):
