@@ -1,0 +1,90 @@
+// GET /api/v1/login'
+
+// Dades a passar al endpoint
+{
+	"user": "username",
+	"password": "password"
+}
+
+// Dades de la resposta
+{
+	"token": "abcdef123456"
+}
+
+// Si hi ha un error
+{
+	"token": "error",
+	"message": "Hi ha hagut un error, explicacio del error"
+}
+
+// GET /api/v1/applicants
+// Necessita autoritzacio per token passada per GET
+{
+	"users" : [
+		{
+			"id": 1,
+			"name": "Gerard del Castillo",
+			"mail": "aslo@aslo.com",
+			"status": "accepted",
+			"newbie": true
+		},
+		{
+			"id": 2,
+			"name": "Martin Cristobal",
+			"mail": "martincrb@martincrb.com",
+			"status": "tbd",
+			"newbie": false
+		},
+		{
+			"id": 3,
+			"name": "Marcelino Coll Rovira",
+			"mail": "coll.marce@gmail.com",
+			"status": "rejected",
+			"newbie": false
+		}
+	]
+}
+
+// GET /api/v1/application/last/
+// Necessita autoritzacio per token passada per GET
+{
+	"id": 1,
+	"name": "Gerard del Castillo",
+	"mail": "aslo@aslo.com",
+	"status": "accepted",
+	"newbie": true,
+	"data": {
+		// Aqui aniran els fields de resposta del typeform que no siguin
+		// els d'adalt
+	}
+}
+
+// GET /api/v1/application/next/
+// Necessita autoritzacio per token passada per GET
+{
+	"id": 2,
+	"name": "Martin Cristobal",
+	"mail": "martincrb@martincrb.com",
+	"status": "tbd",
+	"newbie": false,
+	"data": {
+		// Aqui aniran els fields de resposta del typeform que no siguin
+		// els d'adalt
+	}
+}
+
+// POST /api/v1/rate/<int:application_id>/<rating>
+// Necessita autoritzacio per token passada per GET
+
+// <rating> pot ser better, worse
+{
+	"status": "OK" // Pot ser "OK" o "ERROR"
+}
+
+// POST /api/v1/rate/<int:application_id>/<state>
+// Necessita autoritzacio per token passada per GET
+
+// <state> pot ser accepted, tbd, rejected
+{
+	"status": "OK" // Pot ser "OK" o "ERROR"
+}
