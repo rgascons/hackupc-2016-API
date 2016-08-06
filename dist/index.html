@@ -1,0 +1,31 @@
+<html ng-app="myApp" force-login ng-strict-di check-route-error>
+<head>
+	<title ng-bind="$root.appTitle"></title>
+	<link rel="stylesheet" type="text/css" href="css/build.css">
+	<script src="js/build.js"></script>
+
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+</head>
+
+<body>
+	<div class="loading" show-while-resolving></div>
+	<aside id="leftMenu" close-on-success>
+		<user-info></user-info>
+		<nav>
+			<ul>
+				<li link-route='/judgement'>
+					<span>Judge</span>
+				</li>
+				<li link-route='/people'>
+					<span>Everyone</span>
+				</li>			
+			</ul>
+			
+		</nav>
+	</aside>
+	<main>
+		<div class="fade" ng-view></div>
+	</main>
+</body>
+</html>
