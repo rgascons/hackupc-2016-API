@@ -1,0 +1,35 @@
+#judgement
+{
+	.judgementButtons
+	{
+	    position: absolute;
+	    bottom: 0;
+	    display: flex;
+	    width: 100%;
+	    text-align: center;
+	    
+	    div
+	    {
+	    	flex:1 1 auto;
+	    	background-color: #ddd;
+		    padding: 10px;
+
+		    &:first-child
+		    {
+		    	border-right:thin solid gray;
+		    }
+	    }
+
+
+
+	    .better
+	    {
+		    color: rgba(0, 255, 0, 0.88);
+	    }
+
+	    .worse
+	    {
+	        color: rgba(255, 0, 0, 0.88);
+	    }
+	}
+}

@@ -23,6 +23,7 @@ var onError = notify.onError("Error: <%= error.message %>");
 var JSPATH = [
 	'bower_components/angular/angular.js',
 	'bower_components/angular-route/angular-route.js',
+	'bower_components/ng-route-ext/ng_route_ext.js',
 	'bower_components/angular-animate/angular-animate.js',
 	'bower_components/ng-notify/src/scripts/ng-notify.js',
 	'src/js/**/*.js'

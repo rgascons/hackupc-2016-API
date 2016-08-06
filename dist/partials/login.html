@@ -1,0 +1,28 @@
+<article id="login">
+	<div class="logo">
+		<img src="img/logo.png" />
+		<h2>{{$root.appTitle}} {{$root.version}}</h2>
+	</div>
+	<div class='info' ng-show="form.$submitted && answered && !validUser">
+		Invalid username/password
+	</div>
+	<div class="form">
+		<form name="form">
+			<fieldset>
+				<div><label>User</label></div>
+				<input ng-model="user.name" type="text" />
+			</fieldset>
+			<fieldset>
+				<div><label>Password</label></div>
+				<input ng-model="user.password" type="password" />
+			</fieldset>
+			<fieldset>
+				<label for="rememberme" >Remember me</label>
+				<input id="rememberme" ng-model="user.remember" type="checkbox" />
+			</fieldset>
+			<fieldset class="submit">
+				<input type="submit" value="Begin" ng-click="submit(user)"/>
+			</fieldset>
+		</form>
+	</div>
+</article>

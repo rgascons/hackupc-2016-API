@@ -2,33 +2,46 @@
 
 angular.module('controllers', [])
 //TODO
-.controller('LoginCtrl', ['$scope', 'API', '$location',
-	function ($scope, API, $location) {
+.controller('LoginCtrl', ['$scope', 'API', 'Auth', 'Storage', '$location', 'PATHS',
+	function ($scope, API, Auth, Storage, $location, PATHS) {
 	$scope.validUser = false;
 	$scope.answered = false;
+
 	$scope.submit = function(user){
-		API.login(user).then(function(response){
+		API.login(user).then(function(token){
+			//Success
 			$scope.answered = true;
-			$scope.validUser = response;
-			if(response)
-			{
-				//Default page
-				$location.path('/');
-			}
+			$scope.validUser = true;
+			$location.path(PATHS.judgement);
+			var userObj = {
+				name: user.name,
+				token: token
+			};
+			Auth.login(userObj);
+			if(user.remember)
+				Storage.set("user", userObj);
+
+		}, function(error){
+			//Rejected
+			$scope.answered = true;
+			$scope.error = error.msg;
 		});
 	};
 
-}])
-//TODO veteran and newcommer shared controller
-.controller('VeteransCtrl', ['$scope', 'API', 'lastRated', 'current', '$location',
-	function ($scope, API, lastRated, current, $location) {
-	var type = "veteran";
+	//If is already logged in, get out
+	if(Auth.isLoggedIn())
+	{
+		$location.path(PATHS.judgement);
+	}
 
-	$scope.lastRated = lastRated;
+}])
+.controller('JudgementCtrl', ['$scope', 'API', 'current', '$location', 'PATHS',
+	function ($scope, API, current, $location, PATHS) {
+
 	$scope.current = current;
 
 	$scope.goToLastRated = function(){
-		$location.path("/veterans/last");
+		$location.path(PATHS.last);
 	};
 
 	function rate(rating){
@@ -47,51 +60,40 @@ angular.module('controllers', [])
 	};
 
 }])
-//TODO
 .controller('LastRatedCtrl', ['$scope', 'lastRated', '$window',
 	function($scope, lastRated, $window){
 	$scope.back = function(){
 		$window.history.back();
 	};
-	$scope.lastRated = lastRated;
+	$scope.lastRated = lastRated.person;
+	$scope.rating = lastRated.rated;
 }])
-.controller('NewcomersCtrl', ['$scope', 'API','lastRated', 'current', '$location',
-	function ($scope, API, lastRated, current, $location) {
-	var type = "newcomer";
-
-	$scope.lastRated = lastRated;
-	$scope.current = current;
-
-	$scope.goToLastRated = function(){
-		$location.path("/newcomers/last");
-	};
-
-	function rate(rating){
-		API.rate(type, rating);
-		$scope.lastRated = $scope.current;
-		API.getPending(type).then(function(person){
-			$scope.current = person;
-		});
-	}
-	$scope.better = function(){
-		rate(1);
-	};
-
-	$scope.worse = function(){
-		rate(0);
-	};
-
-}])
-.controller('PeopleCtrl', ['$scope', 'API', 'people',
-	function ($scope, API, people) {
+.controller('PeopleCtrl', ['$scope', 'API', 'people', 'PATHS', '$location',
+	function ($scope, API, people, PATHS, $location) {
 		$scope.people = people;
+
+		$scope.viewPerson = function(id){
+			$location.path(PATHS.people+"/"+id);
+		};
 
 		$scope.changeStatus = function(person, status){
 			person.status = status;
 			API.changeStatus(person.id, status).then(function(){
-				//TODO
-				$window.console.log(person);
-				$window.console.log(person.id + "changed status to "+ status);
+				$window.console.info(person.id + "changed status to "+ status);
+			});
+		};
+}])
+.controller('PersonCtrl', ['$scope', 'person', 'API', '$window',
+	function($scope, person, API, $window){
+		$scope.person = person;
+
+		$scope.back = function(){
+			$window.history.back();
+		};
+
+		$scope.changeStatus = function(status){
+			API.changeStatus(person.id, status).then(function(){
+				$window.console.info(person.id + "changed status to "+ status);				
 			});
 		};
 }]);
