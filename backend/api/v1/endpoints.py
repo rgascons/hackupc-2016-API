@@ -43,7 +43,7 @@ def get_next_application():
 
 # RATE AN APPLICATION
 # POST /api/v1/rate/<int:application_id>/<rating>
-@applicationManager.route('/api/v1/rate/<int:application_id>/<rating>', methods=['POST'])
+@applicationManager.route('/api/v1/rate/<rating>', methods=['POST'])
 @requires_token
 @asJSON
 def rate_application(application_id, rating):
@@ -51,7 +51,7 @@ def rate_application(application_id, rating):
 
 # CHANGE STATE OF APPLICATION
 # POST /api/v1/rate/<int:application_id>/<state>
-@applicationManager.route('/api/v1/rate/<int:application_id>/<state>', methods=['POST'])
+@applicationManager.route('/api/v1/state/<state>', methods=['POST'])
 @requires_token
 @asJSON
 def change_application_state(application_id, state):
