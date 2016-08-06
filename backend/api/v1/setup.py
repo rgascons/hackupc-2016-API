@@ -1,4 +1,4 @@
-from setuptools import setuptools
+from setuptools import setup
 
 setup(
 	name='hackupcapi',
@@ -8,6 +8,8 @@ setup(
 	author='hackupc',
 	install_requires=[
 		'sqlalchemy',
-		'flask'
+		'flask',
+        'flask-sqlalchemy',
+        'alembic'
 	]
 )
