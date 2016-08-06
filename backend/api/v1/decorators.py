@@ -1,17 +1,16 @@
 from flask import jsonify
 from functools import wraps
 
-def asJSON(return_code = 200):
-    def decorator(f):
-        @wraps(f)
-        def decorated_function(*args, **kwargs):
-            response = jsonify(f())
-            response.status_code = return_code
-        return decorated_function
+def asJSON(f, return_code = 200):
+    @wraps(f)
+    def decorator(*args, **kwargs):
+        response = jsonify(f(*args, **kwargs))
+        response.status_code = return_code
+        return response
     return decorator
 
-def requires_token(f):
+def requiresToken(f):
     @wraps(f)
-    def wrappedToken(*args, **kwargs):
-        pass
-    return wrappedToken
+    def decorator(*args, **kwargs):
+        return f(*args, **kwargs)
+    return decorator
