@@ -1,11 +1,7 @@
 from flask import Blueprint
 # import uuid
 # import datetime
-from decorators import asJSON, requires_token
-
-TOKEN_DURATION = 999
-UNAUTHORIZED = 'Unauthorized'
-userSessions = {}
+from decorators import asJSON, requiresToken
 
 apiv1 = Blueprint('apiv1', __name__)
 
@@ -19,15 +15,16 @@ def login_user():
 # GET ALL APPLICANTS
 # GET /api/v1/applicants
 @apiv1.route('/api/v1/applicants', methods=['GET'])
-@requires_token
+@requiresToken
 @asJSON
 def get_applicants():
-    pass
+    print "ayyyyy"
+    return {"name": "marce", "id": 3}
 
 # GET LAST JUDGED APPLICATION
 # GET /api/v1/application/last
 @apiv1.route('/api/v1/application/last', methods=['GET'])
-@requires_token
+@requiresToken
 @asJSON
 def get_last_application():
     pass
@@ -35,7 +32,7 @@ def get_last_application():
 # GET NEXT APPLICATION TO JUDGE
 # GET /api/v1/application/next
 @apiv1.route('/api/v1/application/next', methods=['GET'])
-@requires_token
+@requiresToken
 @asJSON
 def get_next_application():
     pass
@@ -43,7 +40,7 @@ def get_next_application():
 # RATE AN APPLICATION
 # POST /api/v1/rate/<int:application_id>/<rating>
 @apiv1.route('/api/v1/rate/<rating>', methods=['POST'])
-@requires_token
+@requiresToken
 @asJSON
 def rate_application(application_id, rating):
     pass
@@ -51,7 +48,7 @@ def rate_application(application_id, rating):
 # CHANGE STATE OF APPLICATION
 # POST /api/v1/state/<int:application_id>/<state>
 @apiv1.route('/api/v1/state/<int:application_id>/<state>', methods=['POST'])
-@requires_token
+@requiresToken
 @asJSON
 def change_application_state(application_id, state):
     pass
@@ -59,7 +56,7 @@ def change_application_state(application_id, state):
 # GET APPLICATION DETAIL
 # POST /api/v1/application/<int:application_id>
 @apiv1.route('/api/v1/application/<int:application_id>', methods=['GET'])
-@requires_token
+@requiresToken
 @asJSON
 def get_application_detail(application_id):
     pass

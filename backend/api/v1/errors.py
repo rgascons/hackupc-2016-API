@@ -1,3 +1,6 @@
+from decorator import asJSON
+from endpoints import apiv1
+
 BAD_REQUEST = 400
 UNAUTHORIZED = 401
 NOT_FOUND = 404
@@ -8,7 +11,7 @@ class AuthError(object):
 		self.field = field
 		self.message = message
 
-@applicationManager.errorhandler(AuthError)
+@apiv1.errorhandler(AuthError)
 @asJSON(return_code=BAD_REQUEST)
 def handleAuthError(error):
 	return {
