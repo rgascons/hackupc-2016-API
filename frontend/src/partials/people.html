@@ -2,23 +2,53 @@
 	<header>
 		<div class="button" aside-menu-toggle="leftMenu" >&#9776;</div>
 		<h1>{{$root.$route.current.name}}</h1>
+		<div class="button" ng-click="toggleOptions();" >Opt</div>
 	</header>
-	<ul>
-		<li ng-repeat="person in people track by person.id" ng-click="viewPerson(person.id)">
-			<div class="name">
-				{{person.name}} <span>({{person.id}})</span>
-			</div>
-			<div class="status-selector">
-				<div class="blocked" ng-class="{'selected': (person.status == 'blocked')}" ng-click="changeStatus(person, 'blocked')">
-					B
+	<div class="view" ng-if="people.length > 0">
+		<div class="options" ng-class="{'closed': optClosed}">
+			<form>
+				<fieldset>
+					<h3>Filters</h3>
+					<input type="search" ng-model="f.query"/>
+					<div>
+						<label for="checknew">Newcomers</label>
+						<input id="checknew" type="checkbox" ng-model="f.onlyNewcomers"/>
+					</div>
+				</fieldset>
+				<fieldset>
+					<h3>Selectors</h3>
+					<label for="checktba">TBA</label>
+					<input id="checktba" type="checkbox" ng-model="f.tba" />
+					<label for="checkrejected">Rejected</label>
+					<input id="checkrejected" type="checkbox" ng-model="f.rejected"/>
+					<label for="checkaccepted">Accepted</label>
+					<input id="checkaccepted" type="checkbox" ng-model="f.accepted"/>
+				</fieldset>
+			</form>
+		</div>
+		<ul>
+			<li ng-repeat="person in (people | filter: aeople) as filteredPeople" ng-click="viewPerson(person.id)">
+				<div class="name">
+					{{person.name}} <span>({{person.mail}})</span>
 				</div>
-				<div class="algorithm" ng-class="{'selected': (person.status == 'algorithm')}" ng-click="changeStatus(person, 'algorithm')">
-					L
+				<div class="status-selector">
+					<div class="blocked" ng-class="{'selected': (person.status == 'rejected')}" ng-click="changeStatus(person, 'rejected'); $event.stopPropagation()">
+						B
+					</div>
+					<div class="algorithm" ng-class="{'selected': (person.status == 'tba')}" ng-click="changeStatus(person, 'tba'); $event.stopPropagation()">
+						L
+					</div>
+					<div class="accepted" ng-class="{'selected': (person.status == 'accepted')}" ng-click="changeStatus(person, 'accepted'); $event.stopPropagation()">
+						A
+					</div>
 				</div>
-				<div class="accepted" ng-class="{'selected': (person.status == 'accepted')}" ng-click="changeStatus(person, 'accepted')">
-					A
-				</div>
-			</div>
-		</li>
-	</ul>
+			</li>
+			<li class="none" ng-if="filteredPeople.length === 0">
+				<h1>No match found</h1>
+			</li>
+		</ul>
+	</div>
+	<div ng-if="people.length == 0">
+		There's no one
+	</div>
 </article>

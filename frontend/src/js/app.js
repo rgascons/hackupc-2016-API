@@ -5,7 +5,8 @@ angular.module('myApp', ['ngRoute', 'ngAnimate', 'ngNotify', 'controllers', 'dir
 	"login": "/login",
 	"judgement": "/judgement",
 	"last": "/judgement/last",
-	"people": "/people"
+	"people": "/people",
+	"error": "/error"
 })
 .config(['$routeProvider', "PATHS", function($routeProvider, PATHS) {
 
@@ -20,12 +21,8 @@ angular.module('myApp', ['ngRoute', 'ngAnimate', 'ngNotify', 'controllers', 'dir
 		controller: 'JudgementCtrl',
 		name: 'Judgement',
 		resolve:{
-			/*
-			"lastRated":['API', function(API){
-				return API.getLastRated("veteran");
-			}],*/
 			"current":['API', function(API){
-				return API.getPending("veteran");
+				return API.getPending();
 			}]
 		}
 	})
@@ -35,7 +32,7 @@ angular.module('myApp', ['ngRoute', 'ngAnimate', 'ngNotify', 'controllers', 'dir
 		name: 'Last rated',
 		resolve:{
 			"lastRated":['API', function(API){
-				return API.getLastRated("veteran");
+				return API.getLastRated();
 			}]
 		}
 	})
@@ -59,25 +56,10 @@ angular.module('myApp', ['ngRoute', 'ngAnimate', 'ngNotify', 'controllers', 'dir
 			}]
 		}
 	})
-	/*
-	.when('/route2', {
-		templateUrl: 'partials/first.html',
-		name:'route2',
-		controller: 'FirstCtrl',
-		resolve: {
-			dependency:['$route', '$window', 'FirstService', function($route, window, FirstService)
-			{
-				var obj = FirstService.mockData();
-				window.console.log("Resolved:"+obj.title);
-				return obj;
-			}]
-		},
-		animations:{
-			index: ['slidedown','slideup'],
-			route1: ['slidedown','slideup']
-		}
+	.when(PATHS.error, {
+		templateUrl: 'partials/error.html',
+		name: 'Error',
 	})
-	*/
 	.otherwise({
 		redirectTo: PATHS.judgement
 	});

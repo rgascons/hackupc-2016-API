@@ -7,7 +7,7 @@ angular.module('directives', [])
 		link: function(scope, elem, attrs){
 			scope.$on('$routeChangeError', function(){
 				ngNotify.set('Error 404: Where\'s my pizza?', 'error');
-				$location.path("/");
+				$location.path("/error");
 			});
 		}
 	};
@@ -33,7 +33,8 @@ angular.module('directives', [])
 	};
 }])
 */
-.directive('userInfo', ['API', '$location', function(API, $location){
+.directive('userInfo', ['Auth', '$location', 'PATHS', 
+	function(Auth, $location, PATHS){
 	return{
 		restrict: 'AE',
 		template: "<div class='user-info'>"+
@@ -43,9 +44,8 @@ angular.module('directives', [])
 					"</div>",
 		link: function(scope, elem, attrs){
 			scope.logout = function(){
-				API.logout().then(function(){
-					$location.path("/");
-				});
+				Auth.logout();
+				$location.path(PATHS.login);
 			};
 			scope.$on('loginEvent', function(ev, user){
 				scope.username=user.name;

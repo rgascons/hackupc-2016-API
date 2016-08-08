@@ -43,7 +43,7 @@ gulp.task('default', function() {
 });
 
 /*PUBLIC TASKS*/
-gulp.task('dev', ['jshint', 'copyLess','copyJs', 'partials', 'devIndex'], function(){
+gulp.task('dev', ['jshint', 'copyLess','copyJs', 'partials', 'devIndex', 'copyAPItest'], function(){
 	gulp.src("gulpfile.js").pipe(notify({"title": PROJECT_NAME, "subtitle": "Development", "message": "Dev build generated"}));
 });
 
@@ -79,7 +79,7 @@ gulp.task('auto', function () {
 	runSequence('cleanDist',
 		['dev', 'copyStatic'], 
 		function(){
-			gulp.watch(['src/index.html', 'src/js/**/*.js', 'src/css/**/*.less','src/partials/**/*'], ['dev']);
+			gulp.watch(['src/index.html', 'src/js/**/*.js', 'src/css/**/*.less','src/partials/**/*', 'src/testAPI/**/*'], ['dev']);
 		});
 });
 
@@ -93,6 +93,13 @@ gulp.task('build', function () {
 
 
 /*PRIVATE TASKS*/
+gulp.task('copyAPItest', function(){
+	return gulp.src('src/testAPI/**/*')
+	.pipe(plumber({
+		handleError: onError
+	}))
+	.pipe(gulp.dest('./dist/testAPI/'));
+});
 gulp.task('copyLess', function(){
 	return gulp.src(STYLEPATH)
 	.pipe(plumber({

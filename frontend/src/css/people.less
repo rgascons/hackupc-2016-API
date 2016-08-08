@@ -1,7 +1,39 @@
 #people
 {
-	max-height:90%;
-	overflow-y:auto;
+	overflow:hidden;
+	.options
+	{
+		padding:10px;
+		background-color:#edf;
+		margin-top: 0px;
+
+		transition: margin-top 200ms ease;
+		&.closed
+		{
+			margin-top:-165px;
+		}
+	}
+	.none{
+		padding-left:10px;
+	}
+	fieldset
+	{
+		border:none;
+		padding:0;
+		margin-bottom:10px;
+
+		input[type=search]
+		{
+			width:100%;
+		}
+
+		h3
+		{
+			margin:0;
+			border-bottom:thin solid #aaa;
+			margin-bottom:5px;
+		}
+	}
     ul
     {
 	    flex: 1 1 auto;

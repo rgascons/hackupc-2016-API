@@ -1,0 +1,33 @@
+{
+	"users":[
+		{
+			"id": 1,
+			"name": "Gerard",
+			"mail": "aslo@aslo.com",
+			"status": "accepted",
+			"newbie": true
+		
+		},
+		{
+			"id": 2,
+			"name": "Gerard2",
+			"mail": "aslo2@aslo.com",
+			"status": "rejected",
+			"newbie": true
+		},
+		{
+			"id": 3,
+			"name": "Gerard3",
+			"mail": "aslo3@aslo.com",
+			"status": "tba",
+			"newbie": false
+		},
+		{
+			"id": 4,
+			"name": "asdfasdf",
+			"mail": "fdsdfs3@aslo.com",
+			"status": "tba",
+			"newbie": false
+		}
+	]
+}

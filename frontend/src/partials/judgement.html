@@ -6,8 +6,9 @@
 	</header>
 	<div ng-if="current !== null">
 		<h1>{{current.name}}</h1>
-		<h2>{{current.age}}</h2>
-		<div>{{current.desc}}</div>
+		<h2>{{current.id}}</h2>
+		<h2>{{current.data.age}}</h2>
+		<div>{{current.data.desc}}</div>
 		<footer class="judgementButtons">
 			<div class="worse" ng-click="worse()">X</div>
 			<div class="better" ng-click="better()">Y</div>

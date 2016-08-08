@@ -52,11 +52,15 @@ angular.module('services', [])
 		return user.name;
 	};
 
+	service.isAdmin = function(){
+		return user.admin;
+	};
+
 	return service;
 }])
-.factory('API',['$http', '$q', 'Auth', 'Storage',
-	function($http, $q, Auth, Storage){
-	var API_URL = "http://www.hackupc.com";
+.factory('API',['$http', '$q', 'Auth', 'Storage', 'ngNotify',
+	function($http, $q, Auth, Storage, ngNotify){
+	var API_URL = "testAPI";
 	var service = {};
 
 	/*
@@ -67,20 +71,21 @@ angular.module('services', [])
 	* POST:
 	* -on status 401, logs out (token is not valid)
 	* -rejects the promise with an object {status: (Int), msg: (String)}
+	* -Shows a notification	
 	*/
 	function _handleError(response, deferred){
 		var rejectObj = {
 			status: response.status,
-			msg: ''
+			msg: 'Unknown error'
 		};
 
 		if(response.status == 400)
 		{
-			rejectObj.msg = "An error has occurred. Please, contact the admins if you see this.";
+			rejectObj.msg = "An error has occurred (400)";
 		}
 		else if(response.status == 401)
 		{
-			rejectObj.msg = response.data.msg;
+			rejectObj.msg = "Session timed out. Please, log in again. (401)";
 			if(Auth.isLoggedIn())
 			{
 				Auth.logout();
@@ -89,21 +94,20 @@ angular.module('services', [])
 		}
 		else if(response.status == 404)
 		{
-			rejectObj.msg = "Not found";
+			rejectObj.msg = "Not found (404)";
 		}
 		else if(response.status == 500)
 		{
-			rejectObj.msg = "An error has occurred. Please, try again later.";
+			rejectObj.msg = "An error has occurred. Please, try again later. (500)";
 		}
 
+		ngNotify.set(rejectObj.msg, 'error');
 		deferred.reject(rejectObj);
 	}
 
 	/*
 	* PRE: 
 	* -user{name: (String), password: (String)}
-	* POST: 
-	* -If user match is found, Auth.login()
 	*
 	* @returns promise
 	*/
@@ -115,7 +119,7 @@ angular.module('services', [])
 				"password": user.password
 			}
 		}).then(function(response){
-			deferred.resolve(response.data.token);
+			deferred.resolve(response.data);
 		}, function(response){
 			_handleError(response, deferred);
 		});

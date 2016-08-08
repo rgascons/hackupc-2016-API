@@ -23,7 +23,6 @@ var onError = notify.onError("Error: <%= error.message %>");
 var JSPATH = [
 	'bower_components/angular/angular.js',
 	'bower_components/angular-route/angular-route.js',
-	'bower_components/ng-route-ext/ng_route_ext.js',
 	'bower_components/angular-animate/angular-animate.js',
 	'bower_components/ng-notify/src/scripts/ng-notify.js',
 	'src/js/**/*.js'
@@ -44,7 +43,7 @@ gulp.task('default', function() {
 });
 
 /*PUBLIC TASKS*/
-gulp.task('dev', ['jshint', 'copyLess','copyJs', 'partials', 'devIndex'], function(){
+gulp.task('dev', ['jshint', 'copyLess','copyJs', 'partials', 'devIndex', 'copyAPItest'], function(){
 	gulp.src("gulpfile.js").pipe(notify({"title": PROJECT_NAME, "subtitle": "Development", "message": "Dev build generated"}));
 });
 
@@ -94,6 +93,13 @@ gulp.task('build', function () {
 
 
 /*PRIVATE TASKS*/
+gulp.task('copyAPItest', function(){
+	return gulp.src('src/testAPI/**/*')
+	.pipe(plumber({
+		handleError: onError
+	}))
+	.pipe(gulp.dest('./dist/testAPI/'));
+});
 gulp.task('copyLess', function(){
 	return gulp.src(STYLEPATH)
 	.pipe(plumber({
