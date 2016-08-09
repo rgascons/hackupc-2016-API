@@ -33,8 +33,8 @@ angular.module('directives', [])
 	};
 }])
 */
-.directive('userInfo', ['Auth', '$location', 'PATHS', 
-	function(Auth, $location, PATHS){
+.directive('userInfo', ['Auth', 'Storage', '$location', 'PATHS', 
+	function(Auth, Storage, $location, PATHS){
 	return{
 		restrict: 'AE',
 		template: "<div class='user-info'>"+
@@ -43,8 +43,10 @@ angular.module('directives', [])
 					"<div class='logoutBtn' ng-click='logout()'>Logout</div>"+
 					"</div>",
 		link: function(scope, elem, attrs){
+			scope.username = Auth.getUsername();
 			scope.logout = function(){
 				Auth.logout();
+				Storage.clear();
 				$location.path(PATHS.login);
 			};
 			scope.$on('loginEvent', function(ev, user){

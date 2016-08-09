@@ -19,6 +19,7 @@ angular.module('controllers', [])
 				admin: response.admin
 			};
 			Auth.login(userObj);
+			ngNotify.set("Welcome, "+user.name+"!", 'success');
 			if(user.remember)
 				Storage.set("user", userObj);
 
