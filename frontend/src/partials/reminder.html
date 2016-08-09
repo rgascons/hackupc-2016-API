@@ -1,11 +1,12 @@
-<article>
+<article id="reminder">
 	<header>
 		<div class="button" ng-click="back()" >&lt;</div>
 		<h1>{{$root.$route.current.name}}</h1>
+		<div class="button invisible" ></div>
 	</header>
-	<div ng-if="lastRated !== null">
+	<div class="application" ng-if="lastRated !== null">
 		<h1>{{lastRated.name}}</h1>
-		<h2>{{lastRated.data.age}}</h2>
-		<div>{{lastRated.data.desc}}</div>
+		<h2 class="email">{{lastRated.mail}}</h2>
+		<div class="desc">{{lastRated.data.desc}}</div>
 	</div>
 </article>

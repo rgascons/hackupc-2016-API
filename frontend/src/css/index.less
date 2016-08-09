@@ -35,6 +35,10 @@ header{
 		font-weight: bolder;
 		font-size: 20px;
 		cursor: pointer;
+
+		&.invisible{
+			background:none;
+		}
 	}
 	h1
 	{
@@ -164,4 +168,27 @@ main{
 .view{
 	overflow-y: auto;
     height: 93%;
+}
+
+/*Shared*/
+#judgement, #reminder, #person
+{
+	.application{
+		h1{
+			text-align:center;
+			margin-bottom: 0;
+		}
+
+		h2.email{
+			text-align: center;
+			font-size: 16px;
+			font-weight: 100;
+			color: gray;
+			margin-top: 0;
+		}
+
+		.desc{
+			margin:30px;
+		}
+	}
 }
