@@ -1,7 +1,39 @@
 #people
 {
-	max-height:90%;
-	overflow-y:auto;
+	overflow:hidden;
+	.options
+	{
+		padding:10px;
+		background-color:#edf;
+		margin-top: 0px;
+
+		transition: margin-top 200ms ease;
+		&.closed
+		{
+			margin-top:-165px;
+		}
+	}
+	.none{
+		padding-left:10px;
+	}
+	fieldset
+	{
+		border:none;
+		padding:0;
+		margin-bottom:10px;
+
+		input[type=search]
+		{
+			width:100%;
+		}
+
+		h3
+		{
+			margin:0;
+			border-bottom:thin solid #aaa;
+			margin-bottom:5px;
+		}
+	}
     ul
     {
 	    flex: 1 1 auto;
@@ -51,35 +83,34 @@
 				    border-radius: 5px;
 				    padding: 5px 0;
 				    cursor:pointer;
+
+				    color:rgba(255,255,255,0.5);
+
+				    &.selected{
+						color:rgba(255,255,255,1);				    
+				    }
 			    }
 
 			    .blocked
 			    {
-			    	color:#777;
-			    	
-			    	background-color:indianred;
+			    	background-color:lighten(@blocked, 30%);
 			    	&.selected{
-			    		color:white;
-			    		background-color:darkred;
+			    		background-color:@blocked;
 			    	}	
 			    }
 			    .algorithm
 			    {
-			    	color:#777;
 
-			    	background-color:lightblue;
+			    	background-color:lighten(@algorithm, 30%);
 			    	&.selected{
-			    		color:white;
-			    		background-color:dodgerblue;
+			    		background-color:@algorithm;
 			    	}
 			    }
 			    .accepted
 			    {
-			    	color:#777;
-			    	background-color:lightgreen;
+			    	background-color:lighten(@accepted, 30%);
 			    	&.selected{
-			    		color:white;
-			    		background-color:lime;
+			    		background-color:@accepted;
 			    	}
 			    }
 		    }

@@ -1,0 +1,45 @@
+#person{
+	/* See index.less for shared styles */
+	footer{
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		.status-selector{
+			display:flex;
+			text-align:center;
+			div{
+				padding: 10px 0;
+				flex: 1 1 auto;
+
+				color:rgba(255,255,255,0.5);
+
+				&.selected{
+					color:rgba(255,255,255,1);				    
+				}
+
+				&.blocked
+			    {
+			    	background-color:lighten(@blocked, 30%);
+			    	&.selected{
+			    		background-color:@blocked;
+			    	}	
+			    }
+			    &.algorithm
+			    {
+
+			    	background-color:lighten(@algorithm, 30%);
+			    	&.selected{
+			    		background-color:@algorithm;
+			    	}
+			    }
+			    &.accepted
+			    {
+			    	background-color:lighten(@accepted, 30%);
+			    	&.selected{
+			    		background-color:@accepted;
+			    	}
+			    }
+			}
+		}
+	}
+}

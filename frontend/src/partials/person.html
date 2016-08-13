@@ -2,24 +2,25 @@
 	<header>
 		<div class="button" ng-click="back()" >&lt;</div>
 		<h1>{{$root.$route.current.name}}</h1>
+		<div class="button invisible"></div>
 	</header>
 	<div ng-if="person === null || person === undefined">
 		<h1>Oops! this person doesn't exist</h1>
 		<h4>...I think</h4>
 	</div>
-	<div ng-if="person !== null && person !== undefined">
+	<div class="application" ng-if="person !== null && person !== undefined">
 		<h1>{{person.name}}</h1>
-		<h2>{{person.data.age}}</h2>
-		<div>{{person.data.description}}</div>
+		<h2 class="email">{{person.mail}}</h2>
+		<div class="desc">{{person.data.desc}}</div>
 		<footer>
 			<div class="status-selector">
-				<div class="blocked" ng-class="{'selected': (person.status == 'blocked')}" ng-click="changeStatus('blocked')">
+				<div class="blocked" ng-class="{'selected': (person.status == 'rejected')}" ng-click="changeStatus(person, 'rejected')">
 					B
 				</div>
-				<div class="algorithm" ng-class="{'selected': (person.status == 'algorithm')}" ng-click="changeStatus('algorithm')">
+				<div class="algorithm" ng-class="{'selected': (person.status == 'tba')}" ng-click="changeStatus(person, 'tba')">
 					L
 				</div>
-				<div class="accepted" ng-class="{'selected': (person.status == 'accepted')}" ng-click="changeStatus('accepted')">
+				<div class="accepted" ng-class="{'selected': (person.status == 'accepted')}" ng-click="changeStatus(person, 'accepted')">
 					A
 				</div>
 			</div>
