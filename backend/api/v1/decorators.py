@@ -1,5 +1,6 @@
 from flask import jsonify
 from functools import wraps
+# from errors import AuthError
 
 def asJSON(f, return_code = 200):
     @wraps(f)
@@ -12,5 +13,6 @@ def asJSON(f, return_code = 200):
 def requiresToken(f):
     @wraps(f)
     def decorator(*args, **kwargs):
+        # raise AuthError("test", "testing")
         return f(*args, **kwargs)
     return decorator

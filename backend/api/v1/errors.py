@@ -1,5 +1,5 @@
-from decorator import asJSON
 from endpoints import apiv1
+from decorators import asJSON
 
 BAD_REQUEST = 400
 UNAUTHORIZED = 401

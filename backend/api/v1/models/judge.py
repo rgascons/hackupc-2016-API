@@ -1,4 +1,6 @@
-from .. import db
+from db import db
+
+__package__ = "api.v1.models.judge"
 
 class Judge(db.Model):
 	__tablename__ = 'judges'

@@ -1,4 +1,4 @@
-from .. import db
+from db import db
 
 class Judgement(db.Model):
 	__tablename__ = 'judgements'

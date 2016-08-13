@@ -18,7 +18,6 @@ def login_user():
 @requiresToken
 @asJSON
 def get_applicants():
-    print "ayyyyy"
     return {"name": "marce", "id": 3}
 
 # GET LAST JUDGED APPLICATION
