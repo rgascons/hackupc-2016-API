@@ -12,7 +12,7 @@ class Application(db.Model):
     state = db.Column(db.Boolean)
 
     def to_dict(self):
-        final_json = {}
+        final_json = dict()
 
         final_json['id'] = self.id
         final_json['name'] = self.name
