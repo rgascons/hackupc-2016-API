@@ -76,7 +76,7 @@ def get_next_application():
     id = Judge.getJudgeIdByToken()
     newJudgement = Judgement.query \
         .filter_by(judge_id=id, ) \
-        .filter(Judgement.rating is not None) \
+        .filter(Judgement.rating is None) \
         .order_by(desc(Judgement.judge_index)) \
         .first()
     new_app_id = newJudgement.app_id
