@@ -74,8 +74,14 @@ def get_last_application():
 @asJSON
 def get_next_application():
     id = Judge.getJudgeIdByToken()
-
-    #judgement = Judgement(app_id=new_app_id, judge_id=)
+    newJudgement = Judgement.query \
+        .filter_by(judge_id=id, ) \
+        .filter(Judgement.rating is not None) \
+        .order_by(desc(Judgement.judge_index)) \
+        .first()
+    new_app_id = newJudgement.app_id
+    judgement = Judgement(app_id=new_app_id, judge_id=id)
+    return judgement.to_dict()
 
 # RATE AN APPLICATION
 # POST /api/v1/rate/<rating>
