@@ -8,11 +8,11 @@
 		<h1>{{current.name}}</h1>
 		<h2 class="email">{{current.mail}}</h2>
 		<div class="desc">{{current.data.desc}}</div>
-		<footer class="judgementButtons">
-			<div class="worse" ng-click="worse()">&#10005;</div>
-			<div class="better" ng-click="better()">&#10003;</div>
-		</footer>
 	</div>
+	<footer class="judgementButtons">
+		<div class="worse" ng-click="worse()">&#10005;</div>
+		<div class="better" ng-click="better()">&#10003;</div>
+	</footer>
 	<div ng-if="current === null">
 		<h1>No one in this list :/</h1>
 	</div>

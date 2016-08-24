@@ -38,9 +38,10 @@ angular.module('controllers', [])
 	}
 
 }])
-.controller('JudgementCtrl', ['$scope', 'API', 'current', '$location', 'PATHS',
-	function ($scope, API, current, $location, PATHS) {
+.controller('JudgementCtrl', ['$scope', 'API', 'current', '$location', 'ngNotify', 'PATHS',
+	function ($scope, API, current, $location, ngNotify, PATHS) {
 
+	$scope.loading = false;
 	$scope.current = current;
 
 	$scope.goToLastRated = function(){
@@ -48,6 +49,7 @@ angular.module('controllers', [])
 	};
 
 	function rate(rating){
+		//TODO: handle errors
 		API.rate(rating);
 		$scope.lastRated = $scope.current;
 		API.getPending().then(function(person){
