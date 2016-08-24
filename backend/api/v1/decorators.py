@@ -1,6 +1,8 @@
-from flask import jsonify
+from flask import jsonify, request, abort
 from functools import wraps
-# from errors import AuthError
+from  models.judge import Judge
+#from errors import AuthError
+
 
 def asJSON(f, return_code = 200):
     @wraps(f)
@@ -13,6 +15,9 @@ def asJSON(f, return_code = 200):
 def requiresToken(f):
     @wraps(f)
     def decorator(*args, **kwargs):
-        # raise AuthError("test", "testing")
-        return f(*args, **kwargs)
+        judge = Judge.getJudgeIdByToken()
+        if judge is not None:
+            return f(*args, **kwargs)
+        abort(403)
+
     return decorator
