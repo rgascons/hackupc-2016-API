@@ -81,7 +81,9 @@ def get_next_application():
         .first()
     new_app_id = newJudgement.app_id
     judgement = Judgement(app_id=new_app_id, judge_id=id)
-    return judgement.to_dict()
+
+    appl = Application.query.filter_by(id=app_id).first()
+    return appl.to_dict()
 
 # RATE AN APPLICATION
 # POST /api/v1/rate/<rating>
