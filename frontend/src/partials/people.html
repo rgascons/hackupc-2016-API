@@ -29,7 +29,7 @@
 		<ul>
 			<li ng-repeat="person in (people | filter: aeople) as filteredPeople" ng-click="viewPerson(person.id)">
 				<div class="name">
-					{{person.name}} <span>({{person.mail}})</span>
+					{{person.name}} <span>({{person.email}})</span>
 				</div>
 				<div class="status-selector">
 					<div class="blocked" ng-class="{'selected': (person.status == 'rejected')}" ng-click="changeStatus(person, 'rejected'); $event.stopPropagation()">
