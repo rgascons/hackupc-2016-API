@@ -1,7 +1,7 @@
 
 
 angular.module('controllers', [])
-//TODO
+
 .controller('LoginCtrl', ['$scope', 'API', 'Auth', 'Storage', 'ngNotify', '$location', 'PATHS',
 	function ($scope, API, Auth, Storage, ngNotify, $location, PATHS) {
 	$scope.validUser = false;
@@ -38,10 +38,9 @@ angular.module('controllers', [])
 	}
 
 }])
-.controller('JudgementCtrl', ['$scope', 'API', 'current', '$location', 'ngNotify', 'PATHS',
-	function ($scope, API, current, $location, ngNotify, PATHS) {
+.controller('JudgementCtrl', ['$scope', 'API', 'current', '$location', 'PATHS',
+	function ($scope, API, current, $location, PATHS) {
 
-	$scope.loading = false;
 	$scope.current = current;
 
 	$scope.goToLastRated = function(){
@@ -49,7 +48,6 @@ angular.module('controllers', [])
 	};
 
 	function rate(rating){
-		//TODO: handle errors
 		API.rate(rating);
 		$scope.lastRated = $scope.current;
 		API.getPending().then(function(person){
@@ -74,7 +72,7 @@ angular.module('controllers', [])
 }])
 .controller('PeopleCtrl', ['$scope', 'API', 'people', 'PATHS', '$location',
 	function ($scope, API, people, PATHS, $location) {
-		$scope.people = people.users;
+		$scope.people = people;
 		$scope.f ={
 			query: '',
 			accepted: false,
@@ -88,7 +86,7 @@ angular.module('controllers', [])
 		{
 			var reg = new RegExp($scope.f.query, "gi");
 			return (element.name.match(reg) !== null) ||
-					(element.mail.match(reg) !== null);
+					(element.email.match(reg) !== null);
 		}
 
 		function noSelector()

@@ -60,7 +60,7 @@ angular.module('services', [])
 }])
 .factory('API',['$http', '$q', 'Auth', 'Storage', 'ngNotify',
 	function($http, $q, Auth, Storage, ngNotify){
-	var API_URL = "testAPI";
+	var API_URL = "http://127.0.0.1:5000/api/v1";
 	var service = {};
 
 	/*
@@ -113,11 +113,10 @@ angular.module('services', [])
 	*/
 	service.login = function(user){
 		var deferred = $q.defer();
-		$http.get(API_URL+'/login', {
-			params: {
-				"user": user.name,
-				"password": user.password
-			}
+		$http.post(API_URL+'/login', {
+			"user": user.name,
+			"password": user.password
+			
 		}).then(function(response){
 			deferred.resolve(response.data);
 		}, function(response){
@@ -216,8 +215,7 @@ angular.module('services', [])
 	*/
 	service.changeStatus = function(id, status){
 		var deferred = $q.defer();
-		//TODO: user id in url
-		$http.get(API_URL+'/status/'+status, {
+		$http.post(API_URL+'/state/'+id+'/'+status, {
 			params: {
 				"token": Auth.getToken()
 			}
