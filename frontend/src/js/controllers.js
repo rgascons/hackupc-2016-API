@@ -8,6 +8,7 @@ angular.module('controllers', [])
 	$scope.answered = false;
 
 	$scope.submit = function(user){
+		$scope.answered = false;
 		API.login(user).then(function(response){
 			//Success
 			$scope.answered = true;
@@ -26,8 +27,6 @@ angular.module('controllers', [])
 		}, function(error){
 			//Rejected
 			$scope.answered = true;
-			$scope.error = error.msg;
-			ngNotify.set(error.msg, 'error');
 		});
 	};
 
@@ -38,8 +37,8 @@ angular.module('controllers', [])
 	}
 
 }])
-.controller('JudgementCtrl', ['$scope', 'API', 'current', '$location', 'PATHS',
-	function ($scope, API, current, $location, PATHS) {
+.controller('JudgementCtrl', ['$scope', 'API', 'current', '$location', 'ngNotify', 'PATHS',
+	function ($scope, API, current, $location, ngNotify, PATHS) {
 
 	$scope.current = current;
 
@@ -48,8 +47,28 @@ angular.module('controllers', [])
 	};
 
 	function rate(rating){
-		API.rate(rating);
-		$scope.lastRated = $scope.current;
+		API.rate(rating).then(function(response){
+			if(response.data.status)
+			{
+				if(response.data.status == "ok")
+				{
+					ngNotify.set("Rated!", {
+						type: 'success',
+						position:'top',
+						duration:500
+					});
+				}
+				else
+				{
+					ngNotify.set("Error! Try again", {
+						type:'error',
+						position:'top',
+						duration:1000
+					});
+				}
+
+			}
+		});
 		API.getPending().then(function(person){
 			$scope.current = person;
 		});
@@ -101,21 +120,21 @@ angular.module('controllers', [])
 
 			if($scope.f.tba)
 			{
-				if(element.status == "tba")
+				if(element.state == "tba")
 				{
 					return true;
 				}
 			}
-			if($scope.f.accepted)
+			if($scope.f.state)
 			{
-				if(element.status == "accepted")
+				if(element.state == "accepted")
 				{
 					return true;
 				}
 			}
-			if($scope.f.rejected)
+			if($scope.f.state)
 			{
-				if(element.status == "rejected")
+				if(element.state == "rejected")
 				{
 					return true;
 				}
@@ -133,13 +152,13 @@ angular.module('controllers', [])
 			$location.path(PATHS.people+"/"+id);
 		};
 
-		$scope.changeStatus = function(person, status){
-			var old = person.status;
-			person.status = status;
-			API.changeStatus(person.id, status).then(function(){
+		$scope.changeStatus = function(person, state){
+			var old = person.state;
+			person.state = state;
+			API.changeStatus(person.id, state).then(function(){
 				//Success
 			}, function(){
-				person.status = old;
+				person.state = old;
 			});
 		};
 
@@ -160,13 +179,13 @@ angular.module('controllers', [])
 			$window.history.back();
 		};
 
-		$scope.changeStatus = function(person, status){
-			var old = person.status;
-			person.status = status;
-			API.changeStatus(person.id, status).then(function(){
+		$scope.changeStatus = function(person, state){
+			var old = person.state;
+			person.state = state;
+			API.changeStatus(person.id, state).then(function(){
 				//success
 			}, function(){
-				person.status = old;
+				person.state = old;
 			});
 		};
 }]);
