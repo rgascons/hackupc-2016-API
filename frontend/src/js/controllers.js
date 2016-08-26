@@ -120,21 +120,21 @@ angular.module('controllers', [])
 
 			if($scope.f.tba)
 			{
-				if(element.status == "tba")
+				if(element.state == "tba")
 				{
 					return true;
 				}
 			}
-			if($scope.f.accepted)
+			if($scope.f.state)
 			{
-				if(element.status == "accepted")
+				if(element.state == "accepted")
 				{
 					return true;
 				}
 			}
-			if($scope.f.rejected)
+			if($scope.f.state)
 			{
-				if(element.status == "rejected")
+				if(element.state == "rejected")
 				{
 					return true;
 				}
@@ -152,13 +152,13 @@ angular.module('controllers', [])
 			$location.path(PATHS.people+"/"+id);
 		};
 
-		$scope.changeStatus = function(person, status){
-			var old = person.status;
-			person.status = status;
-			API.changeStatus(person.id, status).then(function(){
+		$scope.changeStatus = function(person, state){
+			var old = person.state;
+			person.state = state;
+			API.changeStatus(person.id, state).then(function(){
 				//Success
 			}, function(){
-				person.status = old;
+				person.state = old;
 			});
 		};
 
@@ -179,13 +179,13 @@ angular.module('controllers', [])
 			$window.history.back();
 		};
 
-		$scope.changeStatus = function(person, status){
-			var old = person.status;
-			person.status = status;
-			API.changeStatus(person.id, status).then(function(){
+		$scope.changeStatus = function(person, state){
+			var old = person.state;
+			person.state = state;
+			API.changeStatus(person.id, state).then(function(){
 				//success
 			}, function(){
-				person.status = old;
+				person.state = old;
 			});
 		};
 }]);
