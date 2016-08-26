@@ -116,7 +116,6 @@ def get_application_detail(application_id):
         abort(404)
 
 
-# GET APPLICATION DETAIL
 # GET /api/v1/fetch
 @apiv1.route('/api/v1/fetch', methods=['GET'])
 @asJSON
