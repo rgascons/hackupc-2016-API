@@ -8,6 +8,7 @@ angular.module('controllers', [])
 	$scope.answered = false;
 
 	$scope.submit = function(user){
+		$scope.answered = false;
 		API.login(user).then(function(response){
 			//Success
 			$scope.answered = true;
@@ -26,8 +27,6 @@ angular.module('controllers', [])
 		}, function(error){
 			//Rejected
 			$scope.answered = true;
-			$scope.error = error.msg;
-			ngNotify.set(error.msg, 'error');
 		});
 	};
 
@@ -38,8 +37,8 @@ angular.module('controllers', [])
 	}
 
 }])
-.controller('JudgementCtrl', ['$scope', 'API', 'current', '$location', 'PATHS',
-	function ($scope, API, current, $location, PATHS) {
+.controller('JudgementCtrl', ['$scope', 'API', 'current', '$location', 'ngNotify', 'PATHS',
+	function ($scope, API, current, $location, ngNotify, PATHS) {
 
 	$scope.current = current;
 
@@ -48,8 +47,28 @@ angular.module('controllers', [])
 	};
 
 	function rate(rating){
-		API.rate(rating);
-		$scope.lastRated = $scope.current;
+		API.rate(rating).then(function(response){
+			if(response.data.status)
+			{
+				if(response.data.status == "ok")
+				{
+					ngNotify.set("Rated!", {
+						type: 'success',
+						position:'top',
+						duration:500
+					});
+				}
+				else
+				{
+					ngNotify.set("Error! Try again", {
+						type:'error',
+						position:'top',
+						duration:1000
+					});
+				}
+
+			}
+		});
 		API.getPending().then(function(person){
 			$scope.current = person;
 		});

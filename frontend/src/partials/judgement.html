@@ -4,17 +4,17 @@
 		<h1>{{$root.$route.current.name}}</h1>
 		<div class="button" ng-click="goToLastRated()">&#9872;</div>
 	</header>
-	<div class="application" ng-if="current !== null">
+	<div class="application" ng-if="current.name !== undefined">
 		<h1>{{current.name}}</h1>
 		<h2 class="email">{{current.email}}</h2>
-		<div class="desc">{{person.best_language}}</div>
+		<div class="desc">{{current.best_language}}</div>
 		<div class="desc">{{current.data.desc}}</div>
 	</div>
-	<footer class="judgementButtons">
+	<footer class="judgementButtons" ng-if="current.name !== undefined">
 		<div class="worse" ng-click="worse()">&#10005;</div>
 		<div class="better" ng-click="better()">&#10003;</div>
 	</footer>
-	<div ng-if="current === null">
-		<h1>No one in this list :/</h1>
+	<div class="empty" ng-if="current.name === undefined">
+		<h1>Good job! You're done!</h1>
 	</div>
 </article>

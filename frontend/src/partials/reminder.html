@@ -4,10 +4,13 @@
 		<h1>{{$root.$route.current.name}}</h1>
 		<div class="button invisible" ></div>
 	</header>
-	<div class="application" ng-if="lastRated !== null">
+	<div class="application" ng-if="lastRated !== undefined">
 		<h1>{{lastRated.name}}</h1>
 		<h2 class="email">{{lastRated.email}}</h2>
-		<div class="desc">{{person.best_language}}</div>
+		<div class="desc">{{lastRated.best_language}}</div>
 		<div class="desc">{{lastRated.data.desc}}</div>
+	</div>
+	<div class="empty" class="application" ng-if="lastRated === undefined">
+		<h1>You rated no one! What are you waiting for?!</h1>
 	</div>
 </article>

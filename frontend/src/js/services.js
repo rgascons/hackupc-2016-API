@@ -23,7 +23,9 @@ angular.module('services', [])
 	return service;
 }])
 //Handles user sessions
-//-Events: 'logoutEvent'
+//-Events: 
+//'logoutEvent'
+//'loginEvent'
 .factory('Auth',['$rootScope', function($rootScope){
 	var user = {};
 	var service = {};
@@ -74,10 +76,12 @@ angular.module('services', [])
 	* -Shows a notification	
 	*/
 	function _handleError(response, deferred){
+		var notify = true;
 		var rejectObj = {
 			status: response.status,
 			msg: 'Unknown error'
 		};
+
 
 		if(response.status == 400)
 		{
@@ -92,6 +96,17 @@ angular.module('services', [])
 				Storage.clear();
 			}
 		}
+		else if(response.status == 403)
+		{
+			if(Auth.isLoggedIn())
+			{
+				rejectObj.msg = "Not authorized (403)";
+			}
+			else
+			{
+				notify = false;
+			}
+		}
 		else if(response.status == 404)
 		{
 			rejectObj.msg = "Not found (404)";
@@ -101,7 +116,9 @@ angular.module('services', [])
 			rejectObj.msg = "An error has occurred. Please, try again later. (500)";
 		}
 
-		ngNotify.set(rejectObj.msg, 'error');
+		if(notify)
+			ngNotify.set(rejectObj.msg, 'error');
+
 		deferred.reject(rejectObj);
 	}
 
@@ -192,12 +209,12 @@ angular.module('services', [])
 	*/
 	service.rate = function(rating){
 		var deferred = $q.defer();
-		$http.get(API_URL+'/rate/'+rating, {
+		$http.post(API_URL+'/rate/'+rating, {}, {
 			params: {
 				"token": Auth.getToken()
 			}
 		}).then(function(response){
-			deferred.resolve();
+			deferred.resolve(response);
 		}, function(response){
 			_handleError(response, deferred);
 		});
@@ -215,7 +232,7 @@ angular.module('services', [])
 	*/
 	service.changeStatus = function(id, status){
 		var deferred = $q.defer();
-		$http.post(API_URL+'/state/'+id+'/'+status, {
+		$http.post(API_URL+'/state/'+id+'/'+status, {}, {
 			params: {
 				"token": Auth.getToken()
 			}
