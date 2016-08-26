@@ -21,3 +21,13 @@ def requiresToken(f):
         abort(403)
 
     return decorator
+
+def requiresAdmin(f):
+    @wraps(f)
+    def decorator(*args, **kwargs):
+        admin = Judge.getJudgeAdminByToken()
+        if admin:
+            return f(*args, **kwargs)
+        abort(403)
+
+    return decorator

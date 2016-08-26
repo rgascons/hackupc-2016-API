@@ -23,6 +23,12 @@ class UserManager(cmd.Cmd):
             print "User {}".format(username)
 
             email = raw_input('Enter email for account: ')
+
+            admin = raw_input('Admin? (yes/no): ')
+
+            while admin != 'yes' and admin != 'no':
+                admin = raw_input('Admin? (yes/no): ')
+
             password = raw_input('Enter password: ')
             password_r = raw_input('Once more: ')
 
@@ -33,14 +39,16 @@ class UserManager(cmd.Cmd):
 
             password_enc = hashlib.sha512(password).hexdigest()
 
-            c.execute("INSERT INTO judges (name, email, password) VALUES (?, ?, ?)", (username, email, password_enc))
+            admin = (admin == 'yes')
+
+            c.execute("INSERT INTO judges (name, email, password, admin) VALUES (?, ?, ?, ?)", (username, email, password_enc, admin))
             conn.commit()
 
             f = open('users', 'r+')
             user_list = json.load(f)
             f.seek(0)
             f.truncate()
-            user_list['users'].append({"name": username, "email": email, "password": password_enc})
+            user_list['users'].append({"name": username, "email": email, "password": password_enc, "admin": admin})
             json.dump(user_list, f)
             f.close()
 

@@ -1,7 +1,7 @@
 from flask import Blueprint, request, abort
 import uuid
 # import datetime
-from decorators import asJSON, requiresToken
+from decorators import asJSON, requiresToken, requiresAdmin
 from typeform import getMoreResponses
 import hashlib
 from models.judge import Judge
@@ -133,9 +133,17 @@ def rate_application(rating):
 # POST /api/v1/state/<int:application_id>/<state>
 @apiv1.route('/api/v1/state/<int:application_id>/<state>', methods=['POST'])
 @requiresToken
+@requiresAdmin
 @asJSON
 def change_application_state(application_id, state):
-    pass
+    app = Application.query.filter_by(id=application_id).first()
+
+    if app is not None:
+        app.state = state
+        db.session.commit()
+        return {"result": "ok"}
+
+    return {"result": "ko"}  
 
 # GET APPLICATION DETAIL
 # POST /api/v1/application/<int:application_id>
