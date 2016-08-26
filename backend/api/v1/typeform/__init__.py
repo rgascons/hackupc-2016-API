@@ -6,10 +6,37 @@ from ..models.application import Application
 from ..models.db import db
 import json
 
-field_mappings = {'list_26730025_choice': 'best_language',
-                  'yesno_26729967': 'first_hackathon',
-                  'email_26729982': 'email',
-                  'textfield_26729951': 'name'}
+#field_mappings = {'list_26730025_choice': 'best_language',
+#                  'yesno_26729967': 'first_hackathon',
+#                  'email_26729982': 'email',
+#                  'textfield_26729951': 'name'}
+
+field_mappings ={   'textfield_28227510': 'name',
+                    'textfield_28227511': 'lastname',
+                    'email_28227516': 'email',
+                    'dropdown_28227517': 'degree',
+                    'textfield_28227512': 'university',
+                    'textfield_28227513': 'graduateDate',
+                    'yesno_28227519':'adult',
+                    'textfield_28227514': 'face',
+                    'group_28227508': 'built',
+                    'website_28227524': 'github',
+                    'website_28227525': 'devpost',
+                    'website_28227526':'linkedin',
+                    'website_28227527': 'personalSite',
+                    'yesno_28227520': 'newbie',
+                    'textarea_28227528': 'excitedAbout',
+                    'textarea_28227529': 'workedOn',
+                    'group_28227509': 'comesFrom',
+                    'dropdown_28227518': 'country',
+                    'textfield_28227515': 'city',
+                    'yesno_28227521': 'needTravelScholarship',
+                    'list_28227531_choice': 'tShirtSize',
+                    'list_28227532_choice': 'dietaryRequirements',
+                    'yesno_28227522': 'applyingAsAteam',
+                    'textarea_28227530': 'teammatesName',
+                    'statement_28227530': 'statement',
+                    'yesno_28227523': 'mlhAuthorization'}
 
 def generateCleanDict(apidata):
     questions_dict = {}
@@ -37,10 +64,11 @@ def createApplications(data):
         del application['name']
         email = application['email']
         del application['email']
-        newbie = application['first_hackathon'] == u'1'
-        del application['first_hackathon']
+        #newbie = application['newbie'] == u'1'
+        #del application['newbie']
         string_data = json.dumps(application)
-        app = Application(name=name, email=email, newbie=newbie, data=string_data)
+        #app = Application(name=name, email=email, newbie=newbie, data=string_data)
+        app = Application(name=name, email=email, data=string_data)
         db.session.add(app)
         info("Added application with email %s", email)
 
