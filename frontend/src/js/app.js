@@ -67,7 +67,7 @@ angular.module('myApp', ['ngRoute', 'ngAnimate', 'ngNotify', 'controllers', 'dir
 }])
 .run(['$rootScope', '$route', 'Storage', 'Auth', function($rootScope, $route, Storage, Auth) {
 	$rootScope.appTitle = "Hackers Judge";
-	$rootScope.version = "0.4a";
+	$rootScope.version = "1.0b";
 	$rootScope.$route = $route;
 
 	var user = Storage.get("user");
