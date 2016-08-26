@@ -29,16 +29,16 @@
 		<ul>
 			<li ng-repeat="person in (people | filter: aeople) as filteredPeople" ng-click="viewPerson(person.id)">
 				<div class="name">
-					{{person.name}} <span>({{person.mail}})</span>
+					{{person.name}} <span>({{person.email}})</span>
 				</div>
 				<div class="status-selector">
-					<div class="blocked" ng-class="{'selected': (person.status == 'rejected')}" ng-click="changeStatus(person, 'rejected'); $event.stopPropagation()">
+					<div class="blocked" ng-class="{'selected': (person.state == 'rejected')}" ng-click="changeStatus(person, 'rejected'); $event.stopPropagation()">
 						B
 					</div>
-					<div class="algorithm" ng-class="{'selected': (person.status == 'tba')}" ng-click="changeStatus(person, 'tba'); $event.stopPropagation()">
+					<div class="algorithm" ng-class="{'selected': (person.state == 'tba')}" ng-click="changeStatus(person, 'tba'); $event.stopPropagation()">
 						L
 					</div>
-					<div class="accepted" ng-class="{'selected': (person.status == 'accepted')}" ng-click="changeStatus(person, 'accepted'); $event.stopPropagation()">
+					<div class="accepted" ng-class="{'selected': (person.state == 'accepted')}" ng-click="changeStatus(person, 'accepted'); $event.stopPropagation()">
 						A
 					</div>
 				</div>

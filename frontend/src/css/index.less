@@ -65,7 +65,7 @@ aside{
 	transition:width @menuOpenTime ease;
 
 	&.open{
-		width: 300px;
+		width: 425px;
 		
 	}
 
@@ -154,6 +154,18 @@ user-info{
 	    margin: 0 auto;
 	    cursor:pointer;
 	    min-width: 75px;
+    	overflow:hidden;
+
+    }
+    div.admin{
+    	text-align: center;
+		background-color: black;
+		color: red;
+		padding: 5px 0px;
+		margin: 10px 0 0;
+		border: thin solid red;
+    	overflow:hidden;
+
     }
 }
 
@@ -202,11 +214,19 @@ main > div > article{
 	.empty{
 		flex:1 1 auto;
 		display:flex;
+
+		flex-direction:column;
 		align-items: center;
 		justify-content:center;
+
 		text-align:center;
+
 		h1{
 			font-size:2em;
+		}
+		h2{
+			font-size:0.9em;
+			font-weight:normal;
 		}
 	}
 }

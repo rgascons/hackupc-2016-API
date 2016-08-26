@@ -125,14 +125,14 @@ angular.module('controllers', [])
 					return true;
 				}
 			}
-			if($scope.f.state)
+			if($scope.f.accepted)
 			{
 				if(element.state == "accepted")
 				{
 					return true;
 				}
 			}
-			if($scope.f.state)
+			if($scope.f.rejected)
 			{
 				if(element.state == "rejected")
 				{

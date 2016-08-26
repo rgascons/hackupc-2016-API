@@ -10,17 +10,18 @@
 	</div>
 	<div class="application" ng-if="person !== null && person !== undefined">
 		<h1>{{person.name}}</h1>
-		<h2 class="email">{{person.mail}}</h2>
+		<h2 class="email">{{person.email}}</h2>
+		<div class="desc">{{person.best_language}}</div>
 		<div class="desc">{{person.data.desc}}</div>
 		<footer>
 			<div class="status-selector">
-				<div class="blocked" ng-class="{'selected': (person.status == 'rejected')}" ng-click="changeStatus(person, 'rejected')">
+				<div class="blocked" ng-class="{'selected': (person.state == 'rejected')}" ng-click="changeStatus(person, 'rejected')">
 					B
 				</div>
-				<div class="algorithm" ng-class="{'selected': (person.status == 'tba')}" ng-click="changeStatus(person, 'tba')">
+				<div class="algorithm" ng-class="{'selected': (person.state == 'tba')}" ng-click="changeStatus(person, 'tba')">
 					L
 				</div>
-				<div class="accepted" ng-class="{'selected': (person.status == 'accepted')}" ng-click="changeStatus(person, 'accepted')">
+				<div class="accepted" ng-class="{'selected': (person.state == 'accepted')}" ng-click="changeStatus(person, 'accepted')">
 					A
 				</div>
 			</div>

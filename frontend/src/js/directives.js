@@ -13,21 +13,30 @@ angular.module('directives', [])
 	};
 
 }])
-.directive('userInfo', ['Auth', 'Storage', '$location', 'PATHS', 
-	function(Auth, Storage, $location, PATHS){
+.directive('userInfo', ['Auth', 'Storage', '$location', 'ngNotify', 'PATHS', 
+	function(Auth, Storage, $location, ngNotify, PATHS){
 	return{
 		restrict: 'AE',
 		template: "<div class='user-info'>"+
 					"<div>Logged in as</div>"+
 					"<div class='username'>{{username}}</div>"+
 					"<div class='logoutBtn' ng-click='logout()'>Logout</div>"+
+					"<div ng-if='admin' class='admin' ng-click='moo()'>SUPERcow powers</div>"+
 					"</div>",
 		link: function(scope, elem, attrs){
 			scope.username = Auth.getUsername();
+			scope.admin = Auth.isAdmin();
 			scope.logout = function(){
 				Auth.logout();
 				Storage.clear();
 				$location.path(PATHS.login);
+			};
+			scope.moo = function(){
+				ngNotify.set("MooOoOoOooOoOoO", {
+					position:'top',
+					type: 'grimace',
+					duration: 1000
+				});
 			};
 			scope.$on('loginEvent', function(ev, user){
 				scope.username=user.name;
