@@ -40,6 +40,7 @@ angular.module('directives', [])
 			};
 			scope.$on('loginEvent', function(ev, user){
 				scope.username=user.name;
+				scope.admin = Auth.isAdmin();
 			});
 		}
 	};
