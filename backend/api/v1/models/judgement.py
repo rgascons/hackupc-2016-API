@@ -25,7 +25,7 @@ class Judgement(db.Model):
     def getCurrentJudgementByJudgeId(judge_id):
         judgement = Judgement.query \
             .filter_by(judge_id=judge_id) \
-            .filter(Judgement.rating.is_(None)) \
+            .filter(Judgement.rating.is_('')) \
             .order_by(desc(Judgement.judge_index)) \
             .first()
 
