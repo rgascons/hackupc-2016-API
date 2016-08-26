@@ -26,7 +26,7 @@ def login_user():
         token = str(uuid.uuid4())
         user.token = token
         db.session.commit()
-        return {'token': token}
+        return {'token': token, 'admin': user.admin}
     else:
         abort(403)
 
