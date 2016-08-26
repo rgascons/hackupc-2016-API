@@ -18,6 +18,7 @@ class Application(db.Model):
         final_json['name'] = self.name
         final_json['email'] = self.email
         final_json['newbie'] = self.newbie
+        final_json['state'] = self.state
 
         partial_data = json.loads(self.data)
 

@@ -8,7 +8,7 @@ from models.judge import Judge
 from models.application import Application
 from models.judgement import Judgement
 from models.db import db
-from sqlalchemy import desc
+from sqlalchemy import desc, asc
 
 apiv1 = Blueprint('apiv1', __name__)
 
@@ -74,16 +74,43 @@ def get_last_application():
 @asJSON
 def get_next_application():
     id = Judge.getJudgeIdByToken()
-    newJudgement = Judgement.query \
+
+    judgement = Judgement.query \
         .filter_by(judge_id=id, ) \
-        .filter(Judgement.rating is None) \
         .order_by(desc(Judgement.judge_index)) \
         .first()
-    new_app_id = newJudgement.app_id
-    judgement = Judgement(app_id=new_app_id, judge_id=id)
 
-    appl = Application.query.filter_by(id=new_app_id).first()
-    return appl.to_dict()
+    if (judgement is not None) and (judgement.rating == ''):
+        print "ayyyy"
+        app_id = judgement.app_id
+        app = Application.query.filter_by(id=app_id).first()
+    else:
+        if judgement is None:
+            first_app = Application.query.order_by(asc(Application.id)).first()
+            next_app = first_app
+            new_app_id = next_app.id
+        else:
+            new_app_id = judgement.app_id + 1
+            next_app = Application.query.filter_by(id=new_app_id).first()
+
+        if next_app is not None:
+            newJudgement = Judgement(app_id=new_app_id, judge_id=id)
+            newJudgement.rating = ''
+            if judgement is None:
+                newJudgement.judge_index = 0
+            else:    
+                newJudgement.judge_index = judgement.judge_index + 1
+
+            db.session.add(newJudgement)
+            db.session.commit()
+            app = next_app
+        else:
+            app = None
+
+    if app is not None:
+        return app.to_dict()
+    else:
+        return {}
 
 # RATE AN APPLICATION
 # POST /api/v1/rate/<rating>
