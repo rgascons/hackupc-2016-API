@@ -40,8 +40,6 @@ angular.module('controllers', [])
 .controller('JudgementCtrl', ['$scope', 'API', 'current', '$location', 'ngNotify', '$window', 'PATHS',
 	function ($scope, API, current, $location, ngNotify, $window, PATHS) {
 
-	var applicationDiv = $window.document.querySelector('.application');
-
 	$scope.current = current;
 
 	$scope.goToLastRated = function(){
@@ -63,7 +61,7 @@ angular.module('controllers', [])
 						position:'top',
 						duration:500
 					});
-					applicationDiv.scrollTop = 0;
+					$window.document.querySelector('.application').scrollTop = 0;
 				}
 				else
 				{

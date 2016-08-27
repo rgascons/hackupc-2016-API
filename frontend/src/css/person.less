@@ -20,7 +20,7 @@
 			width: 100%;
 			height: 30px;
 			margin-top: -30px;
-			background: linear-gradient(transparent,white);
+			background: linear-gradient(transparent,@generalBg);
 	    }
 
 		.status-selector{
@@ -30,10 +30,10 @@
 				padding: 10px 0;
 				flex: 1 1 auto;
 
-				color:rgba(255,255,255,0.5);
+				color: fadeout(@footerColor, 50%);
 
 				&.selected{
-					color:rgba(255,255,255,1);				    
+					color:@footerColor;				    
 				}
 
 				&.blocked
