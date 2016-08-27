@@ -4,11 +4,53 @@
 		<h1>{{$root.$route.current.name}}</h1>
 		<div class="button" ng-click="goToLastRated()">&#9872;</div>
 	</header>
-	<div class="application" ng-if="current.name !== undefined">
-		<h1>{{current.name}}</h1>
-		<h2 class="email">{{current.email}}</h2>
-		<div class="desc">{{current.best_language}}</div>
-		<div class="desc">{{current.data.desc}}</div>
+	<div class='application' ng-if="current.name">
+		
+		<div class="title" ng-if="current.name !== undefined">
+			<h1>{{current.name}} {{current.lastname}}</h1>
+			<h2 class="email">{{current.email}}</h2>
+		</div>
+		<table>
+			<tr ng-if="current.city || current.country">
+				<th>From</th>
+				<td>{{current.city}} ({{current.country}})</td>
+			</tr>
+			<tr ng-if="current.university">
+				<th>University</th>
+				<td>{{current.university}}</td>
+			</tr>
+			<tr ng-if="current.degree">
+				<th>Degree</th>
+				<td>{{current.degree}} ({{current.graduateDate}})</td>
+			</tr>
+			<tr ng-if="current.excitedAbout">
+				<th colspan="2" class="centered">Excited about</th>
+			</tr>
+			<tr ng-if="current.excitedAbout">
+				<td colspan="2" class="near">{{current.excitedAbout}}</td>
+			</tr>
+			<tr ng-if="current.workedOn">
+				<th colspan="2" class="centered">Worked on</th>
+			</tr>
+			<tr ng-if="current.workedOn">
+				<td colspan="2" class="near">{{current.workedOn}}</td>
+			</tr>
+		</table>
+		<div class="misc">
+				<div class="team" ng-if="current.applyingAsAteam == '1'">Team</div>
+				<div class="travel" ng-if="current.needTravelScholarship == '1'">Needs Travel</div>
+				<div class="newbie" ng-if="current.newbie == '1'">Newbie</div>
+				<div class="noadult" ng-if="current.adult != '1'">&lt;18</div>
+		</div>
+		<div class="webs">
+			<img src="img/devpost.svg" ng-class="{'active':(web(current, 'devpost'))}" ng-click="openLink(current.devpost)"/>
+			<img src="img/github.png" ng-class="{'active':web(current, 'github')}" ng-click="openLink(current.github)"/>
+			<img src="img/linkedin.png" ng-class="{'active':web(current,'linkedin')}" ng-click="openLink(current.linkedin)"/>
+			<div ng-class="{'active':web(current, 'personalSite')}" ng-click="openLink(current.personalSite)">🙋</div>
+		</div>
+		<div class="face">
+			{{current.face}}
+		</div>
 	</div>
 	<footer class="judgementButtons" ng-if="current.name !== undefined">
 		<div class="worse" ng-click="worse()">&#10005;</div>

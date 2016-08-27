@@ -4,11 +4,53 @@
 		<h1>{{$root.$route.current.name}}</h1>
 		<div class="button invisible" ></div>
 	</header>
-	<div class="application" ng-if="lastRated.name !== undefined">
-		<h1>{{lastRated.name}}</h1>
-		<h2 class="email">{{lastRated.email}}</h2>
-		<div class="desc">{{lastRated.best_language}}</div>
-		<div class="desc">{{lastRated.data.desc}}</div>
+	<div class='application' ng-if="lastRated.name">
+		
+		<div class="title" ng-if="lastRated.name !== undefined">
+			<h1>{{lastRated.name}} {{lastRated.lastname}}</h1>
+			<h2 class="email">{{lastRated.email}}</h2>
+		</div>
+		<table>
+			<tr ng-if="lastRated.city || lastRated.country">
+				<th>From</th>
+				<td>{{lastRated.city}} ({{lastRated.country}})</td>
+			</tr>
+			<tr ng-if="lastRated.university">
+				<th>University</th>
+				<td>{{lastRated.university}}</td>
+			</tr>
+			<tr ng-if="lastRated.degree">
+				<th>Degree</th>
+				<td>{{lastRated.degree}} ({{lastRated.graduateDate}})</td>
+			</tr>
+			<tr ng-if="lastRated.excitedAbout">
+				<th colspan="2" class="centered">Excited about</th>
+			</tr>
+			<tr ng-if="lastRated.excitedAbout">
+				<td colspan="2" class="near">{{lastRated.excitedAbout}}</td>
+			</tr>
+			<tr ng-if="lastRated.workedOn">
+				<th colspan="2" class="centered">Worked on</th>
+			</tr>
+			<tr ng-if="lastRated.workedOn">
+				<td colspan="2" class="near">{{lastRated.workedOn}}</td>
+			</tr>
+		</table>
+		<div class="misc">
+				<div class="team" ng-if="lastRated.applyingAsAteam == '1'">Team</div>
+				<div class="travel" ng-if="lastRated.needTravelScholarship == '1'">Needs Travel</div>
+				<div class="newbie" ng-if="lastRated.newbie == '1'">Newbie</div>
+				<div class="noadult" ng-if="lastRated.adult != '1'">&lt;18</div>
+		</div>
+		<div class="webs">
+			<img src="img/devpost.svg" ng-class="{'active':(web(lastRated, 'devpost'))}" ng-click="openLink(lastRated.devpost)"/>
+			<img src="img/github.png" ng-class="{'active':web(lastRated, 'github')}" ng-click="openLink(lastRated.github)"/>
+			<img src="img/linkedin.png" ng-class="{'active':web(lastRated,'linkedin')}" ng-click="openLink(lastRated.linkedin)"/>
+			<div ng-class="{'active':web(lastRated, 'personalSite')}" ng-click="openLink(lastRated.personalSite)">🙋</div>
+		</div>
+		<div class="face">
+			{{lastRated.face}}
+		</div>
 	</div>
 	<div class="empty" class="application" ng-if="lastRated.name === undefined">
 		<h1>You rated no one! What are you waiting for?!</h1>
