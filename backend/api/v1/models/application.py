@@ -9,7 +9,7 @@ class Application(db.Model):
     email = db.Column(db.String(128))
     newbie = db.Column(db.Boolean)
     data = db.Column(db.Text())
-    state = db.Column(db.String(10))
+    state = db.Column(db.String(10), default="tbd")
 
     def to_dict(self):
         final_json = dict()
