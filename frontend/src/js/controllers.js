@@ -37,14 +37,20 @@ angular.module('controllers', [])
 	}
 
 }])
-.controller('JudgementCtrl', ['$scope', 'API', 'current', '$location', 'ngNotify', 'PATHS',
-	function ($scope, API, current, $location, ngNotify, PATHS) {
+.controller('JudgementCtrl', ['$scope', 'API', 'current', '$location', 'ngNotify', '$window', 'PATHS',
+	function ($scope, API, current, $location, ngNotify, $window, PATHS) {
+
+	var applicationDiv = $window.document.querySelector('.application');
 
 	$scope.current = current;
 
 	$scope.goToLastRated = function(){
 		$location.path(PATHS.last);
 	};
+
+	function isValidLink(link){
+		return link !== "" && link != "http://";
+	}
 
 	function rate(rating){
 		API.rate(rating).then(function(response){
@@ -57,6 +63,7 @@ angular.module('controllers', [])
 						position:'top',
 						duration:500
 					});
+					applicationDiv.scrollTop = 0;
 				}
 				else
 				{
@@ -81,12 +88,42 @@ angular.module('controllers', [])
 		rate('worse');
 	};
 
+	/* Redundant code, this could be a directive (see LastRatedCtrl, PersonCtrl)*/
+	$scope.web = function(obj, name){
+		if(obj[name] !== undefined)
+		{
+			return isValidLink(obj[name]);
+		}
+	};
+
+	$scope.openLink = function(link){
+		if(isValidLink(link))
+			$window.open(link);
+	};
+
 }])
 .controller('LastRatedCtrl', ['$scope', 'lastRated', '$window',
 	function($scope, lastRated, $window){
 	$scope.back = function(){
 		$window.history.back();
 	};
+
+	function isValidLink(link){
+		return link !== "" && link != "http://";
+	}
+
+	$scope.web = function(obj, name){
+		if(obj[name] !== undefined)
+		{
+			return isValidLink(obj[name]);
+		}
+	};
+
+	$scope.openLink = function(link){
+		if(isValidLink(link))
+			$window.open(link);
+	};
+
 	$scope.lastRated = lastRated;
 }])
 .controller('PeopleCtrl', ['$scope', 'API', 'people', 'PATHS', '$location',
@@ -174,6 +211,23 @@ angular.module('controllers', [])
 .controller('PersonCtrl', ['$scope', 'person', 'API', '$window',
 	function($scope, person, API, $window){
 		$scope.person = person;
+
+			
+		function isValidLink(link){
+			return link !== "" && link != "http://";
+		}
+
+		$scope.web = function(obj, name){
+			if(obj[name] !== undefined)
+			{
+				return isValidLink(obj[name]);
+			}
+		};
+
+		$scope.openLink = function(link){
+			if(isValidLink(link))
+				$window.open(link);
+		};
 
 		$scope.back = function(){
 			$window.history.back();

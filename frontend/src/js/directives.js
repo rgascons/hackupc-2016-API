@@ -32,7 +32,7 @@ angular.module('directives', [])
 				$location.path(PATHS.login);
 			};
 			scope.moo = function(){
-				ngNotify.set("MooOoOoOooOoOoO", {
+				ngNotify.set("🐄 MooOoOoOooOoOoO 🐮", {
 					position:'top',
 					type: 'grimace',
 					duration: 1000

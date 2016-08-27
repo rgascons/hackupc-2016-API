@@ -8,11 +8,54 @@
 		<h1>Oops! this person doesn't exist</h1>
 		<h4>...I think</h4>
 	</div>
-	<div class="application" ng-if="person !== null && person !== undefined">
-		<h1>{{person.name}}</h1>
-		<h2 class="email">{{person.email}}</h2>
-		<div class="desc">{{person.best_language}}</div>
-		<div class="desc">{{person.data.desc}}</div>
+	<div class='application'>
+		
+		<div class="title">
+			<h1>{{person.name}} {{person.lastname}}</h1>
+			<h2 class="email">{{person.email}}</h2>
+		</div>
+		<table>
+			<tr ng-if="person.city || person.country">
+				<th>From</th>
+				<td>{{person.city}} ({{person.country}})</td>
+			</tr>
+			<tr ng-if="person.university">
+				<th>University</th>
+				<td>{{person.university}}</td>
+			</tr>
+			<tr ng-if="person.degree">
+				<th>Degree</th>
+				<td>{{person.degree}} ({{person.graduateDate}})</td>
+			</tr>
+			<tr ng-if="person.excitedAbout">
+				<th colspan="2" class="centered">Excited about</th>
+			</tr>
+			<tr ng-if="person.excitedAbout">
+				<td colspan="2" class="near">{{person.excitedAbout}}</td>
+			</tr>
+			<tr ng-if="person.workedOn">
+				<th colspan="2" class="centered">Worked on</th>
+			</tr>
+			<tr ng-if="person.workedOn">
+				<td colspan="2" class="near">{{person.workedOn}}</td>
+			</tr>
+		</table>
+		<div class="misc">
+				<div class="team" ng-if="person.applyingAsAteam == '1'">Team</div>
+				<div class="travel" ng-if="person.needTravelScholarship == '1'">Needs Travel</div>
+				<div class="newbie" ng-if="person.newbie == '1'">Newbie</div>
+				<div class="noadult" ng-if="person.adult != '1'">&lt;18</div>
+		</div>
+		<div class="webs">
+			<img src="img/devpost.svg" ng-class="{'active':(web(person, 'devpost'))}" ng-click="openLink(person.devpost)"/>
+			<img src="img/github.png" ng-class="{'active':web(person, 'github')}" ng-click="openLink(person.github)"/>
+			<img src="img/linkedin.png" ng-class="{'active':web(person,'linkedin')}" ng-click="openLink(person.linkedin)"/>
+			<div ng-class="{'active':web(person, 'personalSite')}" ng-click="openLink(person.personalSite)">🙋</div>
+		</div>
+		<div class="face">
+			{{person.face}}
+		</div>
+	</div>
 		<footer>
 			<div class="status-selector">
 				<div class="blocked" ng-class="{'selected': (person.state == 'rejected')}" ng-click="changeStatus(person, 'rejected')">
@@ -26,5 +69,4 @@
 				</div>
 			</div>
 		</footer>
-	</div>
 </article>
