@@ -1,9 +1,9 @@
 Install
 -------
 
--Install requirements (in requirements.txt)
--Make backend/api/v1/tmp folder
--Create backend/api/v1/settings.py file. (See settings.example.py)
+-Install requirements (in requirements.txt)  
+-Make backend/api/v1/tmp folder  
+-Create backend/api/v1/settings.py file. (See settings.example.py)  
 
 Serve
 -----
