@@ -40,8 +40,6 @@ angular.module('controllers', [])
 .controller('JudgementCtrl', ['$scope', 'API', 'current', '$location', 'ngNotify', '$window', 'PATHS',
 	function ($scope, API, current, $location, ngNotify, $window, PATHS) {
 
-	var applicationDiv = $window.document.querySelector('.application');
-
 	$scope.current = current;
 
 	$scope.goToLastRated = function(){
@@ -63,7 +61,7 @@ angular.module('controllers', [])
 						position:'top',
 						duration:500
 					});
-					applicationDiv.scrollTop = 0;
+					$window.document.querySelector('.application').scrollTop = 0;
 				}
 				else
 				{
@@ -126,13 +124,13 @@ angular.module('controllers', [])
 
 	$scope.lastRated = lastRated;
 }])
-.controller('PeopleCtrl', ['$scope', 'API', 'people', 'PATHS', '$location',
-	function ($scope, API, people, PATHS, $location) {
+.controller('PeopleCtrl', ['$scope', 'Auth', 'ngNotify', 'API', 'people', 'PATHS', '$location',
+	function ($scope, Auth, ngNotify, API, people, PATHS, $location) {
 		$scope.people = people;
 		$scope.f ={
 			query: '',
 			accepted: false,
-			tba: false,
+			tbd: false,
 			onlyNewcomers: false,
 			rejected: false
 		};
@@ -148,16 +146,16 @@ angular.module('controllers', [])
 		function noSelector()
 		{
 			return $scope.f.accepted === false && 
-					$scope.f.tba === false  &&
+					$scope.f.tbd === false  &&
 					$scope.f.rejected === false;
 		}
 
 		function selectorMatch(element)
 		{
 
-			if($scope.f.tba)
+			if($scope.f.tbd)
 			{
-				if(element.state == "tba")
+				if(element.state == "tbd")
 				{
 					return true;
 				}
@@ -181,7 +179,7 @@ angular.module('controllers', [])
 		}
 		function filterMatch(element){
 			if($scope.f.onlyNewcomers)
-				return element.newbie;
+				return (element.newbie === '1');
 
 			return true;
 		}
@@ -190,13 +188,21 @@ angular.module('controllers', [])
 		};
 
 		$scope.changeStatus = function(person, state){
-			var old = person.state;
-			person.state = state;
-			API.changeStatus(person.id, state).then(function(){
-				//Success
-			}, function(){
-				person.state = old;
-			});
+			if(Auth.isAdmin())
+			{
+				var old = person.state;
+				person.state = state;
+				API.changeStatus(person.id, state).then(function(){
+					//Success
+				}, function(){
+					person.state = old;
+				});
+				
+			}
+			else
+			{
+				ngNotify.set('Only admins can force a state', 'info');
+			}
 		};
 
 		$scope.aeople = function(element){
@@ -208,8 +214,8 @@ angular.module('controllers', [])
 		};
 
 }])
-.controller('PersonCtrl', ['$scope', 'person', 'API', '$window',
-	function($scope, person, API, $window){
+.controller('PersonCtrl', ['$scope','Auth', 'ngNotify', 'person', 'API', '$window',
+	function($scope, Auth, ngNotify, person, API, $window){
 		$scope.person = person;
 
 			
@@ -234,12 +240,20 @@ angular.module('controllers', [])
 		};
 
 		$scope.changeStatus = function(person, state){
-			var old = person.state;
-			person.state = state;
-			API.changeStatus(person.id, state).then(function(){
-				//success
-			}, function(){
-				person.state = old;
-			});
+			if(Auth.isAdmin())
+			{
+				var old = person.state;
+				person.state = state;
+				API.changeStatus(person.id, state).then(function(){
+					//Success
+				}, function(){
+					person.state = old;
+				});
+				
+			}
+			else
+			{
+				ngNotify.set('Only admins can force a state', 'info');
+			}
 		};
 }]);

@@ -4,8 +4,9 @@
 	.options
 	{
 		padding:10px;
-		background-color:#edf;
+		background-color:@optionsBg;
 		margin-top: 0px;
+		color: @optionsColor;
 
 		transition: margin-top 200ms ease;
 		&.closed
@@ -30,14 +31,14 @@
 		h3
 		{
 			margin:0;
-			border-bottom:thin solid #aaa;
+			border-bottom:thin solid fadeout(@optionsColor, 20%);
 			margin-bottom:5px;
 		}
 	}
     ul
     {
 	    flex: 1 1 auto;
-	    background-color: white;
+		background-color: @generalBg;
 	    list-style: none;
 	    padding: 0;
 	    margin: 0;
