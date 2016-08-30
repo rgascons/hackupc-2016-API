@@ -1,15 +1,3 @@
-Install
--------
-
--Install Nodejs
-(In frontend/)
-> npm install  
-> npm -g install bower  
-> bower install  
-> npm -g install gulp  
-(lists available tasks:)  
-> gulp   
-
 Use
 ---
 

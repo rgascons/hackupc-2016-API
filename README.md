@@ -28,3 +28,18 @@ In chrome you could avoid this by launching chrome with the following flags:
     google-chrome --disable-web-security --user-data-dir="chromedata"  
   
 once it is nginx that serves this it won't be necessary
+
+User Manager
+------------
+In backend/:  
+
+    python useradd.py  
+Add user:  
+
+    add <username>
+    <follow instructions>  
+Delete user:  
+
+    delete <username>
+
+Admins can force states on applications.
