@@ -41,11 +41,11 @@ CURRDIR=${pwd}
 curl -L https://npmjs.org/install.sh | sudo sh
 
 cd "$DIR/frontend"
-npm install
-npm -g install bower
+sudo npm install
+sudo npm -g install bower
 bower install
-npm -g install gulp
+sudo npm -g install gulp
 gulp
 
 cd "$CURRDIR"
-echo "Application Manager should be installed now unless you see errors above, now add it to nginx"o nginx"
+echo "Application Manager should be installed now unless you see errors above, now add it to nginx"
