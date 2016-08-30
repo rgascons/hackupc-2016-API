@@ -1,6 +1,4 @@
 #!/usr/bin/bash
-set -v
-
 # Get script directory
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -39,6 +37,8 @@ mkdir "$DIR/backend/api/v1/tmp"
 # INSTALLING FRONTEND
 CURRDIR=${pwd}
 
+curl -L https://npmjs.org/install.sh | sudo sh
+
 cd "$DIR/frontend"
 npm install
 npm -g install bower
@@ -47,4 +47,4 @@ npm -g install gulp
 gulp
 
 cd "$CURRDIR"
-echo "Application Manager should be installed now unless you see errors above, now add it to nginx"
+echo "Application Manager should be installed now unless you see errors above, now add it to nginx"o nginx"
