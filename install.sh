@@ -3,6 +3,8 @@
 # Get script directory
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+echo "Using $DIR as base path"
+
 # Install virtualenv if we don't have it
 pip install virtualenv
 
@@ -26,7 +28,7 @@ echo "Typeform FormID:"
 read typeformID
 
 cp "$DIR/backend/api/v1/settings.example.py" "$DIR/backend/api/v1/settings.py"
-sed -i "s/typeformapikey/$typeformKey/g" "$DIR/backend/api/v1/settings.py"
-sed -i "s/typeformformid/$typeformID/g" "$DIR/backend/api/v1/settings.py"
+sed -i "s|typeformapikey|${typeformKey}|g" $DIR/backend/api/v1/settings.py
+sed -i "s|typeformformid|${typeformID}|g" $DIR/backend/api/v1/settings.py
 
 echo "Application Manager is installed, now add it to nginx"
