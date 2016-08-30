@@ -6,6 +6,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 echo "Using $DIR as base path"
 
+# INSTALLING BACKEND
 # Install virtualenv if we don't have it
 pip install virtualenv
 
@@ -32,4 +33,18 @@ cp "$DIR/backend/api/v1/settings.example.py" "$DIR/backend/api/v1/settings.py"
 sed -i '' "s|typeformapikey|${typeformKey}|g" $DIR/backend/api/v1/settings.py
 sed -i '' "s|typeformformid|${typeformID}|g" $DIR/backend/api/v1/settings.py
 
+# Create tmp folder for database
+mkdir "$DIR/backend/api/v1/tmp"
+
+# INSTALLING FRONTEND
+CURRDIR=${pwd}
+
+cd "$DIR/frontend"
+npm install
+npm -g install bower
+bower install
+npm -g install gulp
+gulp
+
+cd "$CURRDIR"
 echo "Application Manager should be installed now unless you see errors above, now add it to nginx"
