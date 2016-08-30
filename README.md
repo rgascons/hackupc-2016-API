@@ -15,6 +15,10 @@ bash install.sh
 ```
 on a fresh clone of the repository
 
+Nginx
+-----
+[How to serve flask with nginx](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-16-04)
+
 Local testing  
 -------------
 You will have to launch two servers, the backend server and another one to serve the frontend. Since the frontend has to communicate with the backend (this means you'll be sending requests to a different domain) your browser could show security errors.  
