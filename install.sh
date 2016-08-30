@@ -32,7 +32,8 @@ sed -i '' "s|typeformapikey|${typeformKey}|g" $DIR/backend/api/v1/settings.py
 sed -i '' "s|typeformformid|${typeformID}|g" $DIR/backend/api/v1/settings.py
 
 # Create tmp folder for database
-mkdir "$DIR/backend/api/v1/tmp"
+mkdir "$DIR/backend/api/tmp"
+touch "$DIR/backend/api/tmp/test.db"
 
 # INSTALLING FRONTEND
 CURRDIR=${pwd}
