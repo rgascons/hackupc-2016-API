@@ -28,8 +28,8 @@ echo "\n Typeform FormID:"
 read typeformID
 
 cp "$DIR/backend/api/v1/settings.example.py" "$DIR/backend/api/v1/settings.py"
-sed -i '' "s|typeformapikey|${typeformKey}|g" $DIR/backend/api/v1/settings.py
-sed -i '' "s|typeformformid|${typeformID}|g" $DIR/backend/api/v1/settings.py
+sed -i "s|typeformapikey|${typeformKey}|g" $DIR/backend/api/v1/settings.py
+sed -i "s|typeformformid|${typeformID}|g" $DIR/backend/api/v1/settings.py
 
 # Create tmp folder for database
 mkdir "$DIR/backend/api/tmp"
