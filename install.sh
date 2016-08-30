@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-set -x
+set -v
 
 # Get script directory
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -22,14 +22,14 @@ php install --upgrade pip
 pip install -r "$DIR/backend/requirements.txt"
 
 # Create settings.py from the example
-echo "Typeform API key:"
+echo "\n Typeform API key:"
 read typeformKey
 
-echo "Typeform FormID:"
+echo "\n Typeform FormID:"
 read typeformID
 
 cp "$DIR/backend/api/v1/settings.example.py" "$DIR/backend/api/v1/settings.py"
 sed -i '' "s|typeformapikey|${typeformKey}|g" $DIR/backend/api/v1/settings.py
 sed -i '' "s|typeformformid|${typeformID}|g" $DIR/backend/api/v1/settings.py
 
-echo "Application Manager is installed, now add it to nginx"
+echo "Application Manager should be installed now unless you see errors above, now add it to nginx"
