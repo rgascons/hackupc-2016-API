@@ -1,4 +1,5 @@
 from flask import jsonify, request, abort
+import json
 from functools import wraps
 from  models.judge import Judge
 #from errors import AuthError
@@ -7,9 +8,8 @@ from  models.judge import Judge
 def asJSON(f, return_code = 200):
     @wraps(f)
     def decorator(*args, **kwargs):
-        response = jsonify(f(*args, **kwargs))
-        response.status_code = return_code
-        return response
+        response = json.dumps(f(*args, **kwargs))
+        return response, return_code
     return decorator
 
 def requiresToken(f):
