@@ -12,6 +12,7 @@ import json
 #                  'textfield_26729951': 'name'}
 
 field_mappings ={   'textfield_28227510': 'name',
+                    'fileupload_28660712':'CV',
                     'textfield_28227511': 'lastname',
                     'email_28227516': 'email',
                     'dropdown_28227517': 'degree',
@@ -51,8 +52,9 @@ def generateCleanDict(apidata):
         answers = response['answers']
         tmp_dict = {}
         for field in answers:
-            field_name = field_mappings[field]
-            tmp_dict[field_name] = answers[field]
+            if field in field_mappings:
+                field_name = field_mappings[field]
+                tmp_dict[field_name] = answers[field]
 
         clean_data.append(tmp_dict.copy())
 
