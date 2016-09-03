@@ -15,7 +15,7 @@ virtualenv -p python2.7 "$VENVDIR"
 . "$VENVDIR/bin/activate"
 
 # Upgrade pip
-php install --upgrade pip
+pip install --upgrade pip
 
 # Install requirements.txt
 pip install -r "$DIR/backend/requirements.txt"
@@ -37,8 +37,6 @@ touch "$DIR/backend/api/tmp/test.db"
 
 # INSTALLING FRONTEND
 CURRDIR=${pwd}
-
-curl -L https://npmjs.org/install.sh | sudo sh
 
 cd "$DIR/frontend"
 sudo npm install
