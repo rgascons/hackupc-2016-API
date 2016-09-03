@@ -62,7 +62,7 @@ angular.module('services', [])
 }])
 .factory('API',['$http', '$q', 'Auth', 'Storage', 'ngNotify',
 	function($http, $q, Auth, Storage, ngNotify){
-	var API_URL = "http://127.0.0.1:5000/api/v1";
+	var API_URL = "http://localhost:8080/api/v1";
 	var service = {};
 
 	/*
@@ -135,6 +135,17 @@ angular.module('services', [])
 			"password": user.password
 			
 		}).then(function(response){
+			deferred.resolve(response.data);
+		}, function(response){
+			_handleError(response, deferred);
+		});
+
+		return deferred.promise;
+	};
+
+	service.fetchNewApplications = function() {
+		var deferred = $q.defer();
+		$http.get(API_URL+'/fetch').then(function(response) {
 			deferred.resolve(response.data);
 		}, function(response){
 			_handleError(response, deferred);

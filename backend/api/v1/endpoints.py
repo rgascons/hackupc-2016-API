@@ -76,9 +76,9 @@ def get_next_application():
     id = Judge.getJudgeIdByToken()
 
     judgement = Judgement.query \
-        .filter_by(judge_id=id, ) \
-        .order_by(desc(Judgement.judge_index)) \
-        .first()
+                         .filter_by(judge_id=id) \
+                         .order_by(desc(Judgement.judge_index)) \
+                         .first()
 
     if (judgement is not None) and (judgement.rating == ''):
         print "ayyyy"
@@ -87,6 +87,7 @@ def get_next_application():
     else:
         if judgement is None:
             first_app = Application.query.order_by(asc(Application.id)).first()
+            print first_app
             next_app = first_app
             new_app_id = next_app.id
         else:

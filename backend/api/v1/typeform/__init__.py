@@ -40,13 +40,7 @@ field_mappings ={   'textfield_28227510': 'name',
                     'yesno_28227523': 'mlhAuthorization'}
 
 def generateCleanDict(apidata):
-    questions_dict = {}
     clean_data = []
-
-    for question in apidata['questions']:
-        id = question['id']
-        question_text = question['question']
-        questions_dict[id] = question_text
 
     for response in apidata['responses']:
         answers = response['answers']

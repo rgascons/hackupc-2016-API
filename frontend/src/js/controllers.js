@@ -9,22 +9,32 @@ angular.module('controllers', [])
 
 	$scope.submit = function(user){
 		$scope.answered = false;
-		API.login(user).then(function(response){
+		API.login(user).then(
+		function(login_response){
 			//Success
-			$scope.answered = true;
-			$scope.validUser = true;
-			$location.path(PATHS.judgement);
-			var userObj = {
-				name: user.name,
-				token: response.token,
-				admin: response.admin
-			};
-			Auth.login(userObj);
-			ngNotify.set("Welcome, "+user.name+"!", 'success');
-			if(user.remember)
-				Storage.set("user", userObj);
-
-		}, function(error){
+			API.fetchNewApplications().then(
+			function(apps_response) {
+				// Success
+				console.log("Fetched the new applications");
+				$scope.answered = true;
+				$scope.validUser = true;
+				var userObj = {
+					name: user.name,
+					token: login_response.token,
+					admin: login_response.admin
+				};
+				console.log(userObj);
+				Auth.login(userObj);
+				ngNotify.set("Welcome, "+user.name+"!", 'success');
+				if(user.remember)
+					Storage.set("user", userObj);
+				$location.path(PATHS.judgement);
+			},
+			function(error) {
+				console.log("Error fetching new applications");
+			});
+		},
+		function(error){
 			//Rejected
 			$scope.answered = true;
 		});
