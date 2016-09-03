@@ -15,7 +15,6 @@ angular.module('controllers', [])
 			API.fetchNewApplications().then(
 			function(apps_response) {
 				// Success
-				console.log("Fetched the new applications");
 				$scope.answered = true;
 				$scope.validUser = true;
 				var userObj = {
@@ -23,7 +22,6 @@ angular.module('controllers', [])
 					token: login_response.token,
 					admin: login_response.admin
 				};
-				console.log(userObj);
 				Auth.login(userObj);
 				ngNotify.set("Welcome, "+user.name+"!", 'success');
 				if(user.remember)
