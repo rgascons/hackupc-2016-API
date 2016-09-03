@@ -70,6 +70,10 @@ angular.module('controllers', [])
 						duration:500
 					});
 					$window.document.querySelector('.application').scrollTop = 0;
+
+					API.getPending().then(function(person){
+						$scope.current = person;
+					});
 				}
 				else
 				{
@@ -79,12 +83,9 @@ angular.module('controllers', [])
 						duration:1000
 					});
 				}
-
 			}
 		});
-		API.getPending().then(function(person){
-			$scope.current = person;
-		});
+		
 	}
 	$scope.better = function(){
 		rate('better');

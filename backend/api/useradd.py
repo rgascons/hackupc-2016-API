@@ -44,29 +44,10 @@ class UserManager(cmd.Cmd):
             c.execute("INSERT INTO judges (name, email, password, admin) VALUES (?, ?, ?, ?)", (username, email, password_enc, admin))
             conn.commit()
 
-            # f = open('users', 'r+')
-            # user_list = json.load(f)
-            # f.seek(0)
-            # f.truncate()
-            # user_list['users'].append({"name": username, "email": email, "password": password_enc, "admin": admin})
-            # json.dump(user_list, f)
-            # f.close()
-
-
     def do_delete(self, username):
         if username:
             c.execute('DELETE FROM judges WHERE name=?', (username,))
             conn.commit()
-
-            # f = open('users', 'r+')
-            # user_list = json.load(f)
-            # f.seek(0)
-            # f.truncate()
-
-            # user_list = [x for x in user_list['users'] if x['name'] != username]
-
-            # json.dump(user_list, f)
-            # f.close()
 
     def do_EOF(self, *args):
         return True
