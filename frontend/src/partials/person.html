@@ -46,6 +46,10 @@
 				<div class="newbie" ng-if="person.newbie == '1'">Newbie</div>
 				<div class="noadult" ng-if="person.adult != '1'">&lt;18</div>
 		</div>
+		<div class="teammates" ng-if="person.applyingAsAteam == '1' && person.teammatesName">
+			<h3>Team members</h3>
+			<pre>{{person.teammatesName}}</pre>
+		</div>
 		<div class="webs">
 			<img src="img/devpost.svg" ng-class="{'active':(web(person, 'devpost'))}" ng-click="openLink(person.devpost)"/>
 			<img src="img/github.png" ng-class="{'active':web(person, 'github')}" ng-click="openLink(person.github)"/>
