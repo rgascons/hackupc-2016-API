@@ -75,5 +75,13 @@ for it in range(0, iterations):
         mean = float(sum(gamma.values())) / max(len(gamma.values()), 1)
         for key in gamma.keys():
             gamma[key] = gamma[key] / mean
+
+def actualBatch(app_id):
+    #TODO
+    return True
+
+#Filter non batchable
+filtered = {k: v for k, v in gamma.items() if actualBatch(k)}
+
 #print result
-print(sorted(gamma, key=gamma.get, reverse=True))
+print(sorted(filtered, key=gamma.get, reverse=True))
