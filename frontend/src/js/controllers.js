@@ -45,10 +45,19 @@ angular.module('controllers', [])
 	}
 
 }])
-.controller('JudgementCtrl', ['$scope', 'API', 'current', '$location', 'ngNotify', '$window', 'PATHS',
-	function ($scope, API, current, $location, ngNotify, $window, PATHS) {
+.controller('JudgementCtrl', ['$scope', 'API', 'current', '$location', 'ngNotify', '$window', 'Storage', 'Auth', 'PATHS',
+	function ($scope, API, current, $location, ngNotify, $window, Storage, Auth, PATHS) {
+
+	//Is this the first time this user logs in?
+	$scope.firstTime = (Storage.getGlobal(Auth.getUsername()) === null);
 
 	$scope.current = current;
+
+
+	$scope.gotIt = function(){
+		$scope.firstTime = false;
+		Storage.setGlobal(Auth.getUsername(), false);		
+	};
 
 	$scope.goToLastRated = function(){
 		$location.path(PATHS.last);

@@ -16,7 +16,19 @@ angular.module('services', [])
 		return data[key];
 	};
 
+	service.setGlobal = function(key, value){
+		$window.localStorage.setItem(key, $window.JSON.stringify(value));
+	};
+
+	service.getGlobal = function(key){
+		return $window.JSON.parse($window.localStorage.getItem(key));
+	};
+
 	service.clear = function(){
+		$window.localStorage.setItem(ns, "{}");	
+	};
+
+	service.clearGlobal = function(){
 		$window.localStorage.clear();	
 	};
 

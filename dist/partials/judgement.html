@@ -4,7 +4,13 @@
 		<h1>{{$root.$route.current.name}}</h1>
 		<div class="button" ng-click="goToLastRated()">&#9872;</div>
 	</header>
-	<div class='application' ng-if="current.name">
+	<div class="instructions" ng-if="firstTime">
+		<h3>Welcome to the Hackers Judge!</h3>
+		<p>Before start judging, please note that ratings are relative. This means you have to rate the current application as <span class="better">better</span> or <span class="worse">worse</span> than the last one you rated.</p>
+		<p>You can always check the application relative to the current one by clicking the top-right button.</p>
+		<div class="ok" ng-click="gotIt()">Got it!</div>
+	</div>
+	<div class='application' ng-if="current.name && !firstTime">
 		
 		<div class="title" ng-if="current.name !== undefined">
 			<h1>{{current.name}} {{current.lastname}}</h1>
@@ -52,11 +58,11 @@
 			{{current.face}}
 		</div>
 	</div>
-	<footer class="judgementButtons" ng-if="current.name !== undefined">
+	<footer class="judgementButtons" ng-if="current.name !== undefined && !firstTime">
 		<div class="worse" ng-click="worse()">&#10005;</div>
 		<div class="better" ng-click="better()">&#10003;</div>
 	</footer>
-	<div class="empty" ng-if="current.name === undefined">
+	<div class="empty" ng-if="current.name === undefined && !firstTime">
 		<h1>Good job! No more applications for you to judge...</h1>
 		<h2>...for now. Please, come back later.</h2>
 	</div>

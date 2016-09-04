@@ -1,6 +1,43 @@
 #judgement{
 	/* See index, there's shared style */
 
+	.instructions
+	{
+		padding:20px;
+		max-width:700px;
+		margin:0 auto;
+
+	
+		p span
+		{
+			color: white;
+			padding: 3px;
+			border-radius: 4px;
+			font-weight:bold;
+			&.better
+			{
+				background: @accepted;
+			}
+
+			&.worse
+			{
+				background: @blocked;
+			}
+		}
+
+
+		.ok
+		{
+		    padding: 10px;
+			font-size: 25px;
+			font-weight: bold;
+			color: white;
+			background-color: #0e90d2;
+			text-align: center;
+			width: 100px;
+			margin: 30px auto 0;
+		}
+	}
 
 	footer.judgementButtons
 	{
