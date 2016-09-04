@@ -43,3 +43,20 @@ Delete user:
     delete <username>
 
 Admins can force states on applications.
+
+# Algorithm usage
+In algorithm/:
+
+    python algorithm.py 
+There is a initial set of judgements:
+
+    jutges = [
+    [{"app_id":"1", "score":"worse"},{"app_id":"2", "score":"better"},{"app_id":"3", "score":"better"},{"app_id":"4", "score":"better"},{"app_id":"5", "score":"better"}],
+    [{"app_id":"5", "score":"worse"},{"app_id":"4", "score":"worse"},{"app_id":"3", "score":"worse"},{"app_id":"2", "score":"worse"},{"app_id":"1", "score":"worse"}]
+    ]
+Resulting on the following result (as expected):
+
+    ['5', '4', '3', '2', '1']
+
+The output is an array with the application ids ordered from better to worse. Remember that this is just a estimation, but in [MM ALGORITHMS FOR GENERALIZED
+BRADLEY–TERRY MODELS](http://sites.stat.psu.edu/~dhunter/papers/bt.pdf) they state that there is a unique maximum likelihood estimator, so a higher number of iterations increases the precision of the result.
