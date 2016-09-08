@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 import v1
 from v1.models import db
 from logging import info, error, warning, DEBUG
@@ -7,6 +8,7 @@ import logging
 logging.basicConfig(filename='api.log',format='[%(asctime)s][%(levelname)s]: %(message)s',level=logging.DEBUG)
 
 hupcAPI = Flask(__name__)
+CORS(hupcAPI)
 info("API Flask application initialized")
 hupcAPI.register_blueprint(v1.apiv1)
 info("API v1 Blueprint registered")
