@@ -25,17 +25,17 @@ angular.module('services', [])
 	};
 
 	service.clear = function(){
-		$window.localStorage.setItem(ns, "{}");	
+		$window.localStorage.setItem(ns, "{}");
 	};
 
 	service.clearGlobal = function(){
-		$window.localStorage.clear();	
+		$window.localStorage.clear();
 	};
 
 	return service;
 }])
 //Handles user sessions
-//-Events: 
+//-Events:
 //'logoutEvent'
 //'loginEvent'
 .factory('Auth',['$rootScope', function($rootScope){
@@ -74,7 +74,7 @@ angular.module('services', [])
 }])
 .factory('API',['$http', '$q', 'Auth', 'Storage', 'ngNotify',
 	function($http, $q, Auth, Storage, ngNotify){
-	var API_URL = "http://localhost:5000/api/v1";
+	var API_URL = "http://46.101.128.159:5000/api/v1";
 	var service = {};
 
 	/*
@@ -85,7 +85,7 @@ angular.module('services', [])
 	* POST:
 	* -on status 401, logs out (token is not valid)
 	* -rejects the promise with an object {status: (Int), msg: (String)}
-	* -Shows a notification	
+	* -Shows a notification
 	*/
 	function _handleError(response, deferred){
 		var notify = true;
@@ -135,7 +135,7 @@ angular.module('services', [])
 	}
 
 	/*
-	* PRE: 
+	* PRE:
 	* -user{name: (String), password: (String)}
 	*
 	* @returns promise
@@ -145,7 +145,7 @@ angular.module('services', [])
 		$http.post(API_URL+'/login', {
 			"user": user.name,
 			"password": user.password
-			
+
 		}).then(function(response){
 			deferred.resolve(response.data);
 		}, function(response){
@@ -182,7 +182,7 @@ angular.module('services', [])
 			_handleError(response, deferred);
 		});
 
-		return deferred.promise;	
+		return deferred.promise;
 	};
 
 	/*
@@ -201,7 +201,7 @@ angular.module('services', [])
 			_handleError(response, deferred);
 		});
 
-		return deferred.promise;	
+		return deferred.promise;
 	};
 
 	/*
@@ -220,7 +220,7 @@ angular.module('services', [])
 			_handleError(response, deferred);
 		});
 
-		return deferred.promise;	
+		return deferred.promise;
 	};
 
 	/*
@@ -242,7 +242,7 @@ angular.module('services', [])
 			_handleError(response, deferred);
 		});
 
-		return deferred.promise;	
+		return deferred.promise;
 	};
 
 	/*
